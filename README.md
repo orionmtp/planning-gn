@@ -1,2 +1,2 @@
 # planning-gn
-test et retest
+test

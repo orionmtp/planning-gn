@@ -36,8 +36,10 @@
                 echo '<br>background<br><textarea rows=20 cols=60 name=background>'.$row['background'].'</textarea><br>';
             }
         }
-
-        echo 'objectifs<br>';
+		echo "<br>";
+		$message="http://run.planning-gn.fr/role.php?event=".$role;
+		QRcode::png($message);
+        echo '<br>objectifs<br>';
         $sql="select id,nom,relation from objectif where gn='$gn' and role='$role'";
         $result=mysqli_query($db,$sql);
         if (mysqli_num_rows($result) > 0) {

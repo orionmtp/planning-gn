@@ -1,6 +1,5 @@
 <?php
     include '../scenar/config.php';
-	include('../phpqrcode/qrlib.php'); 
     echo '<html><head></head><body><center>';
 // On commence par récupérer les champs
     if (isset($_GET['role'])) $role=$_GET['role'];

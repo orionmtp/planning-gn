@@ -29,7 +29,7 @@ else {
 				unlink($nom);
                 $sql="update gn set running='0',serial=NULL where id='$gn'";
                 mysqli_query($db,$sql);
-				$sql="update objectif set succes=defvalue where id='$gn'";
+				$sql="update objectif set succes=defvalue where gn='$gn'";
                 mysqli_query($db,$sql);
                 $delta=0;
             }

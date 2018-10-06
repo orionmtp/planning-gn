@@ -37,8 +37,8 @@
             }
         }
 		echo "<br>";
-		$message="http://run.planning-gn.fr/role.php?event=".$role;
-		QRcode::png($message);
+		$message="http://run.planning-gn.fr/role.php?role=".$role;
+		QRcode::png('$message');
         echo '<br>objectifs<br>';
         $sql="select id,nom,relation from objectif where gn='$gn' and role='$role'";
         $result=mysqli_query($db,$sql);

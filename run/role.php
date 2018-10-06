@@ -39,7 +39,7 @@
         }
 		echo "<br>";
 		$message="http://run.planning-gn.fr/role.php?role=".$role;
-		echo "<img src=\"data:image/png;base64,".QRcode::png('$message')."></img>;
+		echo "<img src=\"data:image/png;base64,".QRcode::png('$message')."\"></img>;
         echo '<br>objectifs<br>';
         $sql="select id,nom,relation from objectif where gn='$gn' and role='$role'";
         $result=mysqli_query($db,$sql);

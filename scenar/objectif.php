@@ -35,7 +35,7 @@ else {
             else $cible=0;
             $relation=$_POST['relation'];
             $descr=mysqli_real_escape_string ($db,$_POST['descr']);
-            $sql="update objectif set role='$role',nom='$nom',succes='$succes',obj_secret='$objectif',cible_secret='$cible',relation='$relation',description='$descr' where id='$obj'";
+            $sql="update objectif set role='$role',nom='$nom',succes='$succes', defvalue='$succes',obj_secret='$objectif',cible_secret='$cible',relation='$relation',description='$descr' where id='$obj'";
             mysqli_query($db,$sql);
         }
         //les infos sur le role a modifier

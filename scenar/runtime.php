@@ -25,9 +25,11 @@ else {
                 $sql = "select serial from gn where id='$gn'";
                 $result=mysqli_query($db,$sql);
                 $row = mysqli_fetch_assoc($result);
-		$nom="qrcode/" . $row['serial'] . ".png";
-		unlink($nom);
+				$nom="qrcode/" . $row['serial'] . ".png";
+				unlink($nom);
                 $sql="update gn set running='0',serial=NULL where id='$gn'";
+                mysqli_query($db,$sql);
+				$sql="update objectif set succes=defvalue where id='$gn'";
                 mysqli_query($db,$sql);
                 $delta=0;
             }

@@ -26,7 +26,7 @@ if($gn==0)
 // Aucun champ n'est vide, on peut enregistrer dans la table
 else     
     {
-        $sql = "insert into objectif values ('','$gn','$role','nom','0','0','description','0','0')";
+        $sql = "insert into objectif values ('','$gn','$role','nom','0','0','description','0','0','0')";
         mysqli_query($db,$sql);
         $besoin=mysqli_insert_id($db);
         $head="location:objectif.php?gn=$gn&objectif=$besoin";

@@ -78,7 +78,7 @@ if (mysqli_num_rows($result) > 0) {
 echo '<br><br>evenements prevus<br>';
 
 //la liste des events
-$sql = "select id,nom,debut,duree,description,priorite from event where gn='$gn' order by debut asc, priorite desc limit 10";
+$sql = "select id,nom,debut,duree,description,priorite from event where gn='$gn' order by debut asc, priorite asc limit 10";
 $result=mysqli_query($db,$sql);
 if (mysqli_num_rows($result) > 0) {
    echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>duree</td><td>description</td></tr>';

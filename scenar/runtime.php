@@ -40,7 +40,7 @@ else {
 		 $truc=date_format($deb,"H:i:s");
                  $chouette=date_format($now,"H:i:s");
                     if ($truc>$chouette) {echo avance;$delta=date_diff($now,$deb); $avance=1;}
-                    else {echo retard;$delta=date_diff($deb,$now); $avance=0;}
+                    else {$delta=date_diff($deb,$now); $avance=0;}
                     $differ=date_format(date_add($zeroed,$delta),"H:i").":00";
 		    $serial = substr(md5(microtime()),rand(0,26),16);
                     $sql="update gn set running='1',delta='$differ',avance='$avance', serial='$serial' where id='$gn'";

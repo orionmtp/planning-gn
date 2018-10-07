@@ -29,7 +29,7 @@ if($gn==0 || $event==0 || $role==-1)
 else     
     {
         if($role==0) {
-            $sql = "insert into role (login,gn,nom,description,pnj,pnj_recurent,background) values ('','$gn','nom a modifier','description a modifier','0','0')";
+            $sql = "insert into role (login,gn,nom,description,pnj,pnj_recurent,background) values ('','$gn','nom a modifier','description a modifier','0','0','')";
             mysqli_query($db,$sql)  or die(mysqli_error($db));
             $role=mysqli_insert_id($db);
         }

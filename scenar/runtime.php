@@ -50,7 +50,7 @@ else {
                     $delta=date_create($differ);
                     $nom="qrcode/". $serial . ".png";
 				$message="http://run.planning-gn.fr/running.php?serial=".$serial;
-					echo '<img src="../common/create_png.php?text='.$message.'"/><br>';
+					echo '<img src="create_png.php?text='.$message.'"/><br>';
                 }
                 else {
                     $sql = "select delta,avance,serial from gn where id='$gn'";

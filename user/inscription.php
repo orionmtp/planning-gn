@@ -6,8 +6,8 @@ if(isset($_POST['register']))
     $login=mysqli_real_escape_string ($db,$_POST['login']);
     $password=md5($_POST['password']);
     $pseudo=mysqli_real_escape_string ($db,$_POST['pseudo']);
-    $sql="insert ignore into login_jeu values('','$login','$password','$pseudo','','','','','','','','','','','')";
-    mysqli_query($db,$sql);
+    $sql="insert ignore into login_jeu (email,password,pseudo,admin,nom,prenom,adresse,tel,sante,alim,contact1_nom,contact1_tel,contact2_nom,contact2_tel)values('$login','$password','$pseudo','','','','','','','','','','','')";
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
     echo '<meta http-equiv="refresh" content="3;url=presentation.html" />';
     echo "</head>\n<body>\n<center>\n";
     echo 'compte cree<br>'."\n";
@@ -24,3 +24,4 @@ else {
 }
 echo "</center>\n</body>\n</html>"; 
 ?>
+

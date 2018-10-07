@@ -13,7 +13,7 @@ else {
     else $obj=0;
        $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
     // On vérifie si les champs sont vides
     if($gn==0 || $obj==0) {
@@ -36,20 +36,20 @@ else {
             $relation=$_POST['relation'];
             $descr=mysqli_real_escape_string ($db,$_POST['descr']);
             $sql="update objectif set role='$role',nom='$nom',succes='$succes', defvalue='$succes',obj_secret='$objectif',cible_secret='$cible',relation='$relation',description='$descr' where id='$obj'";
-            mysqli_query($db,$sql);
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
         }
         //les infos sur le role a modifier
         $sql = "select * from objectif where objectif.id='$obj'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 
         echo '<form method="POST" action="objectif.php?gn='.$gn.'&objectif='.$obj.'">';
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
                 $qui=$row['role'];
                 $sql="select id,nom from role where gn='$gn' order by nom";
-                $result2=mysqli_query($db,$sql);
+                $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 $sql="select id,nom from role where gn='$gn' and id!='$qui' order by nom";
-                $result3=mysqli_query($db,$sql);
+                $result3=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 echo 'nom<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
                 echo 'role concerné : <select name=role>';
                 echo "<option value=0";

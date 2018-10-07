@@ -24,7 +24,7 @@ include 'upper.php';
 echo '<center>';
 echo '<center>roles non joueur<br>'."\n";
 $sql = " select id,nom from role_pnj where gn='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
 echo '<a href="role-pnj.php?role='. $row["id"]. '&gn='.$gn.'">'. $row["nom"] .'</a><br>'."\n";

@@ -15,7 +15,7 @@ else {
     else $objectif=-1; 
         $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
     // On vérifie si les champs sont vides
     if($gn==0 || $event==0 || $objectif==-1)
@@ -28,12 +28,12 @@ else {
     else     
     {
         if ($objectif==0) {
-            $sql = "insert into objectif values ('','$gn','0','nom','0','0','description','0','0')";
-            mysqli_query($db,$sql);
+            $sql = "insert into objectif (gn,role,nom,relation,succes,description,obj_secret,cible_secret,defvalue) values ('$gn','0','nom','0','0','description','0','0')";
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
             $objectif=mysqli_insert_id($db);
         } 
-        $sql = "insert into pre_requis values ('','$event','$objectif','0')";
-        mysqli_query($db,$sql);
+        $sql = "insert into pre_requis (event,objectif,cond) values ('$event','$objectif','0')";
+        mysqli_query($db,$sql)  or die(mysqli_error($db));
         $besoin=mysqli_insert_id($db);
         $head="location:prereq.php?gn=$gn&objectif=$objectif&event=$event";
         header($head);

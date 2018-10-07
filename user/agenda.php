@@ -11,7 +11,7 @@ else $gn=0;
 if($gn==0) {
     $today=date("Y-m-d H:i:s");
     $sql = "select id,nom,debut,fin from gn where debut>'$today' order by debut";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<html><header></header><body><center>';
 if (mysqli_num_rows($result) > 0) {
    echo '<table><tr><td>nom</td><td>debut</td><td>fin</td></tr>';
@@ -27,7 +27,7 @@ else
     {
 //les infos sur le GN
 $sql = "select nom,debut,fin,description from gn where id='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'GN<br>'. $row["nom"] .'<br><table><tr><td>du</td><td>'. $row["debut"] .'</td><td> au </td><td>'. $row["fin"] .'</td></tr></table><br>'. $row["description"] . '<br>';

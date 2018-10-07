@@ -13,7 +13,7 @@ else
     else $gn=0;
        $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
     // On vérifie si les champs sont vides
     if($gn==0)
@@ -31,10 +31,10 @@ else
             $avant=mysqli_real_escape_string ($db,$_POST['desc']);
             $scenario=mysqli_real_escape_string ($db,$_POST['presentation']);
             $sql="update gn set avant='$avant', scenario='$scenario' where id='$gn'";
-            mysqli_query($db,$sql);
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
         }
         $sql = "select nom,avant,scenario from gn where id='$gn'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         if (mysqli_num_rows($result) ==1) {
             echo '<form method="POST" action="scenario.php?gn='.$gn."\">\n";
             $row = mysqli_fetch_assoc($result);

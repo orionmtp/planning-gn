@@ -13,7 +13,7 @@
     else {
         //les infos sur le role a modifier
         $sql = "select nom,description,login,pnj,pnj_recurent,background from role  where id='$role'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         $joueur=0;
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
@@ -41,7 +41,7 @@
 		echo '<img src="create_png.php?text='.$message.'"/><br>';
         echo '<br><br>objectifs<br>';
         $sql="select id,nom,relation from objectif where gn='$gn' and role='$role'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         if (mysqli_num_rows($result) > 0) {
             echo '<table><tr><td>description</td><td>qui</td><td>operation</td></tr>';
             while($row = mysqli_fetch_assoc($result)) {
@@ -52,7 +52,7 @@
                 if ($row['relation']>0) {
                     $cible=$row['relation'];
                     $sql="select nom from role where id='$cible' and gn='$gn'";
-                    $result2=mysqli_query($db,$sql);
+                    $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
                     if (mysqli_num_rows($result) > 0) {
                         $row2 = mysqli_fetch_assoc($result2);
                         echo '<a href=role.php?role='.$cible.'>'.$row2['nom'].'</a>';
@@ -64,14 +64,14 @@
         }
         echo '<br>implications<br>';
         $sql="select id,nom,role,cible_secret from objectif where gn='$gn' and relation='$role'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         if (mysqli_num_rows($result) > 0) {
             echo '<table><tr><td>qui</td><td>description</td><td>secret</td></tr>';
             while($row = mysqli_fetch_assoc($result)) {
                 echo '<tr><td>';
                 $cible=$row['role'];
                 $sql="select nom from role where id='$cible' and gn='$gn'";
-                $result2=mysqli_query($db,$sql);
+                $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result) > 0) {
                     $row2 = mysqli_fetch_assoc($result2);
                     echo '<a href=role.php?gn='.$gn.'&role='.$cible.'>'.$row2['nom'].'</a>';

@@ -14,7 +14,7 @@ else {
 // On vérifie si les champs sont vides
    $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
    if($gn==0)
    {
@@ -28,7 +28,7 @@ include 'upper.php';
    echo '<center>scenaristes sur le projet<br>'."\n";
 
 $sql = " select login.id,pseudo,admin.admin,role,medical, confirmed from login inner join admin on admin.login=login.id where admin.gn='$gn' order by confirmed desc, admin.admin desc, pseudo asc ";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<table><tr><td>pseudo</td><td>responsabilite</td><td>admin</td><td>doc</td><td>confirme</td></tr>';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {

@@ -24,13 +24,13 @@ include 'upper.php';
 echo '<center>';
    echo '<center>roles joueurs<br>'."\n";
 $sql = " select role_pj.id,role_pj.nom from role_pj where gn='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
         echo '<a href="role.php?role='. $row["id"]. '&gn='.$gn.'">'. $row["nom"] .'</a>';
         $id=$row['id'];
         $sql = " select login_jeu.id,login_jeu.pseudo from login_jeu inner join role_pj on login_jeu.id=role_pj.login where role_pj.id='$id'";
-        $result2=mysqli_query($db,$sql);
+        $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
         if (mysqli_num_rows($result2) > 0) {
         $row2 = mysqli_fetch_assoc($result2);
         echo ' joue par <a href="joueur.php?id='. $row2['id'].'&gn='.$gn.'">'. $row2["pseudo"] .'</a>';

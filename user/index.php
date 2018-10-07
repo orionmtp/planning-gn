@@ -9,7 +9,7 @@
       $mypassword = md5(mysqli_real_escape_string($db,$_POST['password'])); 
     
       $sql = "SELECT id FROM login_jeu WHERE email = '$myusername' and password = '$mypassword'";
-      $result = mysqli_query($db,$sql);
+      $result = mysqli_query($db,$sql)  or die(mysqli_error($db));
       $count = mysqli_num_rows($result);
       // If result matched $myusername and $mypassword, table row must be 1 row
       if($count == 1) {

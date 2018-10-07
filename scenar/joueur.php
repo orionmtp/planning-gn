@@ -8,7 +8,7 @@ else {
    include 'config.php';
    $orga=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$orga' and confirmed='1'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
 // On commence par récupérer les champs
    if (isset($_GET['gn'])) 
@@ -30,16 +30,16 @@ else {
     if (isset($_POST['envoi'])) {
         if (isset($_POST['paiement'])) {
             $sql="update inscription set paiement='1' where login='$id' and gn='$gn'";
-            mysqli_query($db,$sql);
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
         }
         else {
             $sql="update inscription set paiement='0' where login='$id' and gn='$gn'";
-            mysqli_query($db,$sql);
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
         }
         
     }
     $sql = " select admin.medical,admin.admin from admin where admin.gn='$gn' and admin.login='$orga' ";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    $row=mysqli_fetch_assoc($result);
    $doc=$row['medical'];
@@ -59,7 +59,7 @@ echo '<center>';
    echo '<center>informations joueur<br>'."\n";
 
 $sql = " select login_jeu.*,inscription.pnj,inscription.paiement from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn' and inscription.login='$id'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    $row=mysqli_fetch_assoc($result);
    echo $row['pseudo'].'<br>';

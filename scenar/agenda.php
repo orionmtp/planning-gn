@@ -9,7 +9,7 @@ include 'upper2.php';
         $myusername = mysqli_real_escape_string($db,$_POST['login']);
         $mypassword = md5(mysqli_real_escape_string($db,$_POST['password']));     
         $sql = "SELECT id FROM login WHERE email = '$myusername' and password = '$mypassword'";
-        $result = mysqli_query($db,$sql);
+        $result = mysqli_query($db,$sql) or die(mysqli_error($db));
         $count = mysqli_num_rows($result);
         // If result matched $myusername and $mypassword, table row must be 1 row
         if($count == 1) {
@@ -35,7 +35,7 @@ else $gn=0;
 if($gn==0) {
     $today=date("Y-m-d H:i").":00";
     $sql = "select id,nom,debut,fin from gn where debut>'$today' order by debut";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo "<center>\n";
 if (mysqli_num_rows($result) > 0) {
    echo "<table>\n<tr><td>nom</td><td>debut</td><td>fin</td></tr>\n";
@@ -50,7 +50,7 @@ else
     {
 //les infos sur le GN
 $sql = "select nom,debut,fin,description from gn where id='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'GN<br>'."\n".$row["nom"] .'<br>'."\n".'<table>'."\n".'<tr>'."\n".'<td>du</td><td>'. $row["debut"] .'</td>'."\n".'<td> au </td>'."\n".'<td>'. $row["fin"] .'</td>'."\n".'</tr>'."\n".'</table><br>'."\n".''. $row["description"] . '<br>'."\n";

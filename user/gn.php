@@ -24,7 +24,7 @@ else
 
 //les infos sur le GN
 $sql = "select nom,debut,fin,description from gn where id='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'GN<br>'. $row["nom"] .'<br><table><tr><td>du</td><td>'. $row["debut"] .'</td><td> au </td><td>'. $row["fin"] .'</td></tr></table><br>'. $row["description"] . '<br>';
@@ -32,7 +32,7 @@ if (mysqli_num_rows($result) == 1) {
 }
 
 $sql = "select pnj,paiement from inscription where gn='$gn' and login='$id'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    while($row = mysqli_fetch_assoc($result)) {
        if ($row['pnj']==0) echo 'vous etes inscrit en tant que PJ.<br>';
@@ -45,7 +45,7 @@ if (mysqli_num_rows($result) == 1) {
 //la liste des scenaristes
 echo '<br><br>scenaristes<br>';
  $sql = "select login.id,pseudo,admin.admin,admin.role from login inner join admin on admin.login=login.id where admin.gn='$gn' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<a href="scenar.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"].' : '.$row['role'].'</a><br>'."\n";
@@ -56,7 +56,7 @@ echo '<br>'."\n";
 //les PNJ inscrits
 echo 'joueurs inscrits<br>'."\n";
 $sql = " select login_jeu.id,pseudo from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<a href="joueur.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"] .'</a><br>'."\n";

@@ -28,12 +28,12 @@ else {
         else {
             $sql="update login set contact2_tel='$cont2_tel', contact2_nom='cont2_nom', contact1_tel='$cont1_tel', contact1_nom='$cont1_nom', sante='$sante', alim='$alim', adresse='$adresse', tel='$tel', prenom='$prenom', nom='$nom', pseudo='$pseudo', login='$login' where id='$id'";
         }
-        mysqli_query($db,$sql);     
+        mysqli_query($db,$sql)  or die(mysqli_error($db));     
     }
     $page=3;
 include 'upper.php';
     $sql="select * from login where id='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     echo "<html>\n<head>\n</head>\n<body>\n<center>\ninformations sur le compte\n<br>\n<br>\n";
     if (mysqli_num_rows($result) == 1) {
         while($row = mysqli_fetch_assoc($result)) {

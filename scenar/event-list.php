@@ -12,7 +12,7 @@ else {
    else $gn=0;
        $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
         $page=12;
         include 'upper.php';
@@ -31,7 +31,7 @@ else {
 		{
 		$event=$_POST['besoin'];
 		$sql="delete from event where id='$event'";
-		mysqli_query($db,$sql);
+		mysqli_query($db,$sql)  or die(mysqli_error($db));
 		}
 
 
@@ -39,7 +39,7 @@ else {
 
        //la liste des events
             $sql = "select id,nom,debut,duree,priorite from event where gn='$gn' order by debut asc, priorite desc";
-            $result=mysqli_query($db,$sql);
+            $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
             if (mysqli_num_rows($result) > 0) {
                 echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>duree</td><td>operation</td></tr>';
                 while($row = mysqli_fetch_assoc($result)) {

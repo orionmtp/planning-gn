@@ -12,7 +12,7 @@ include 'upper.php';
 if (isset($_POST['delete'])) {
     $gn=$_POST['gn'];
     $sql="delete from gn where id='$gn';";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 echo '<center>';
 $sql = "select gn.id, gn.nom,admin.admin,debut from gn inner join admin on admin.gn=gn.id where admin.login='$id' order by debut";

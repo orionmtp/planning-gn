@@ -22,7 +22,7 @@ include 'upper.php';
  echo '<center>';
         
 $sql = " select besoin.id,role_pnj.nom from besoin inner join role_pnj on role_pnj.id=besoin.role where besoin.event='$event'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>role</td><td>PNJ</td><td>operation</td></tr>'."\n";
    while($row = mysqli_fetch_assoc($result)) {
@@ -34,7 +34,7 @@ echo '<form method="POST" action="add-besoin-pnj.php?gn='.$gn.'&event='.$event.'
 echo '<select name="role">';
 echo '<option value="0" selected>nouveau role</option>';
 $sql="select id,nom from role_pnj where role_pnj.gn='$gn' and (role_pnj.type='0' or (role_pnj.type='1' and id not in (select role from besoin where event='$event') )) order by role_pnj.nom";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<option value="'. $row["id"].'">'. $row["nom"] .'</option>';

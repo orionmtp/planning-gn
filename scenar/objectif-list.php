@@ -22,24 +22,24 @@ else {
                 {
                 $event=$_POST['besoin'];
                 $sql="delete from objectif where id='$event'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
                 }
 
               $page=31;
 include 'upper.php';
    echo '<center>liste des objectifs definis<br>'."\n";
 $sql = " select id,role,nom,relation from objectif where gn='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<table><tr><td>titre</td><td>personnage</td><td>cible</td></tr>';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
 $id=$row["role"];
 $sql = " select nom from role where id='$id'";
-$result1=mysqli_query($db,$sql);
+$result1=mysqli_query($db,$sql)  or die(mysqli_error($db));
 $row1 = mysqli_fetch_assoc($result1);
 $id=$row["relation"];
 $sql = " select nom from role where id='$id'";
-$result2=mysqli_query($db,$sql);
+$result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
 $row2 = mysqli_fetch_assoc($result2);
 
       echo '<tr><td><a href="objectif.php?gn='.$gn.'&objectif='. $row["id"]. '">'. $row["nom"] .'</a></td>';

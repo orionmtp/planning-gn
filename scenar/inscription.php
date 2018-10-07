@@ -7,7 +7,7 @@ if(isset($_POST['register']))
     $password=md5($_POST['password']);
     $pseudo=mysqli_real_escape_string ($db,$_POST['pseudo']);
     $sql="insert ignore into login values('','$login','$password','$pseudo','')";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
     echo '<meta http-equiv="refresh" content="3;url=index.php" />';
     echo "</head>\n<body>\n<center>\n";
     echo 'compte cree<br>'."\n";

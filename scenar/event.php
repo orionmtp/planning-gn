@@ -15,7 +15,7 @@ if (isset($_GET['event'])) $event=$_GET['event'];
 else $event=0;
     $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
               $page=13;
 include 'upper.php';
@@ -37,22 +37,22 @@ if (isset($_POST['update'])){
     $prio=$_POST['prio'];
     $descr=mysqli_real_escape_string ($db,$_POST['descr']);
     $sql="update event set nom='$nom', debut='$debut', duree='$duree', prepa='$prepa',priorite='$prio',description='$descr' where id='$event'";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 if (isset($_POST['delete'])){
     $besoin=$_POST['besoin'];
     $sql="delete from besoin where id='$besoin'";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 if (isset($_POST['delete2'])){
     $objectif=$_POST['objectif'];
     $sql="delete from pre_requis where objectif='$objectif' and event='$event'";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
 //les infos sur l'event
 $sql = "select * from event where id='$event'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<form method="POST" action="event.php?gn='.$gn.'&event='.$event.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
@@ -78,7 +78,7 @@ if (mysqli_num_rows($result) > 0) {
  //les roles PNJ participant à l'event
 echo '<center>roles non joueur</center><br>'."\n";
 $sql = " select besoin.id,role.nom from besoin inner join role on role.id=besoin.role where besoin.event='$event' and role.pnj='1' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>role</td><td>PNJ</td><td>operation</td></tr>'."\n";
    while($row = mysqli_fetch_assoc($result)) {
@@ -90,7 +90,7 @@ echo '<form method="POST" action="add-besoin.php?gn='.$gn.'&event='.$event.'">'.
 echo '<select name="role">';
 echo '<option value="0" selected>nouveau role</option>';
 $sql="select id,nom from role where role.gn='$gn' and role.pnj='1' and (role.pnj_recurent='0' or (role.pnj_recurent='1' and id not in (select role from besoin where event='$event') )) order by role.nom";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<option value="'. $row["id"].'">'. $row["nom"] .'</option>';
@@ -103,7 +103,7 @@ echo '<input type="submit" value="ajouter un role PNJ" name="pj"></form>'."\n";
 //les roles joueur participants a l'event
 echo '<center>roles joueurs</center><br>'."\n";
 $sql = " select besoin.id,role.nom from besoin inner join role on besoin.role=role.id where besoin.event='$event' and pnj='0' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>role</td><td>PJ</td><td>operation</td></tr>'."\n";
    while($row = mysqli_fetch_assoc($result)) {
@@ -116,7 +116,7 @@ echo '<form method="POST" action="add-besoin.php?gn='.$gn.'&event='.$event.'">'.
 echo '<select name="role">';
 echo '<option value="0" selected>nouveau role</option>';
 $sql="select id,nom from role where role.gn='$gn' and pnj='0' and id not in (select role from besoin where event='$event') order by role.nom";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<option value="'. $row["id"].'">'. $row["nom"] .'</option>';
@@ -126,14 +126,14 @@ echo '</select>';
 echo '<input type="submit" value="ajouter un role PJ" name="pj"></form>'."\n";
 echo '<br><br>pre requis<br>';
 $sql="select objectif.id, objectif.nom,objectif.role,pre_requis.cond,objectif.succes from objectif inner join pre_requis on objectif.id=pre_requis.objectif where event='$event'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>nom</td><td>role</td><td>condition</td><td>etat actuel</td><td>operation</td></tr>'."\n";
         while($row = mysqli_fetch_assoc($result)) {
             echo '<tr><td><a href="prereq.php?objectif='. $row["id"]. '&gn='.$gn.'&event='.$event.'">'. $row["nom"] .'</a></td>';
             $cible=$row['role'];
             $sql="select nom from role where id='$cible'";
-            $result2=mysqli_query($db,$sql);
+            $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
             $row2 = mysqli_fetch_assoc($result2);
             echo '<td><a href="role.php?gn='.$gn.'&role='.$cible.'">'.$row2['nom'].'</a></td>';
             if ($row['cond']==0) echo '<td>echec</td>';
@@ -146,7 +146,7 @@ if (mysqli_num_rows($result) > 0) {
    echo '</table><br>';
 }
     $sql="select id,nom from objectif where gn='$gn'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     echo '<form method="POST" action="add-prereq.php?gn='.$gn.'&event='.$event.'">';
     echo '<select name=objectif>';
     echo '<option value=0 selectect>nouvel objectif</option>';

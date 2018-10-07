@@ -29,12 +29,12 @@ if($gn==0 || $event==0 || $role==-1)
 else     
     {
         if($role==0) {
-            $sql = "insert into role values ('','','$gn','nom a modifier','description a modifier','1','0')";
-            mysqli_query($db,$sql);
+            $sql = "insert into role (login,gn,nom,description,pnj,pnj_recurent,background) values ('','$gn','nom a modifier','description a modifier','1','0')";
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
             $role=mysqli_insert_id($db);
         }
-        $sql = "insert into besoin values ('','$gn','$event','$role','participation a definir','nom a modifier')";
-        mysqli_query($db,$sql);
+        $sql = "insert into besoin (gn,event,role,description,nom,number) values ('$gn','$event','$role','participation a definir','nom a modifier','')";
+        mysqli_query($db,$sql)  or die(mysqli_error($db));
         $besoin=mysqli_insert_id($db);
         $head="location:besoin.php?gn=$gn&event=$event&besoin=$besoin";
         header($head);

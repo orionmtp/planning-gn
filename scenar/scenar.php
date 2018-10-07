@@ -19,7 +19,7 @@ else {
     }
        $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$orga' and confirmed='1'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
             $page=15;
 include 'upper.php';
@@ -36,40 +36,40 @@ include 'upper.php';
         if (isset($_POST['delete'])) {
             if (!isset($_POST['admin'])) {
                 $sql="delete from admin where id='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }
         }
         else {
             if (isset($_POST['confirm'])) {
                 $sql="update admin set confirmed='1' where id='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }        
             if (isset($_POST['admin'])) {
                 $sql="update admin set admin='1' where login='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }
             else {
                 $sql="update admin set admin='0' where login='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }
             if (isset($_POST['doc'])) {
                 $sql="update admin set medical='1' where login='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }
             else {
                 $sql="update admin set medical='0' where login='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }
             if (isset($_POST['role'])) {
                 $temp=mysqli_real_escape_string ($db,$_POST['role']);
                 $sql="update admin set role='$temp' where login='$id' and gn='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
             }
         }
     }
    
     $sql = " select admin.admin from admin where admin.gn='$gn' and admin.login='$orga' ";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    $row=mysqli_fetch_assoc($result);
    $admin=$row['admin'];
@@ -86,7 +86,7 @@ echo '<html><head></head><body><center>';
    echo '<center>informations scénariste<br>'."\n";
 
 $sql = " select login.id,pseudo,admin.admin,admin.role,admin.medical,confirmed from login inner join admin on login.id=admin.login where admin.gn='$gn' and admin.login='$id'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    $row=mysqli_fetch_assoc($result);
    echo $row['pseudo'].'<br>';

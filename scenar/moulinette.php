@@ -15,7 +15,7 @@ if (isset($_GET['event'])) $event=$_GET['event'];
 else $event=0;
     $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
               $page=13;
 include 'upper.php';

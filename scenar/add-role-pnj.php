@@ -27,7 +27,7 @@ if($gn==0)
 else     
     {
             $sql = "insert into role values ('','','$gn','nom a modifier','description a modifier','1','0')";
-            mysqli_query($db,$sql);
+            mysqli_query($db,$sql)  or die(mysqli_error($db));
             $role=mysqli_insert_id($db);
         $head="location:role-pnj.php?gn=$gn&role=$role";
         header($head);

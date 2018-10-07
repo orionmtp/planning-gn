@@ -9,7 +9,7 @@ if(isset($_POST['forgotten']))
     $rand = substr(md5(microtime()),rand(0,26),8);
     $password=md5($rand);
     $sql="update login set password='$password' where login='$login')";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
     $message="vous avez demandé un nouveau mot de passe pour planningGN\r\nle mot de passe suivant a été généré pour vous : ". $rand ."\r\nVous pouvez vous connecter avec immediatement\r\nL'équipe planningGN";
     $headers = 'From: planning@creadvance.org' . "\r\n" . 'Reply-To: planning@creadvance.org' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
     mail($login,"mot de passe planningGN perdu",$message,$headers);

@@ -12,11 +12,11 @@
         echo '<center>';
         //les infos sur le role a modifier
         $sql = "select * from objectif where id='$obj'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         $row = mysqli_fetch_assoc($result);
             $qui=$row["role"];
                 $sql="select id,nom from role where id='$qui'";
-                $result2=mysqli_query($db,$sql);
+                $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 echo 'nom<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
                 echo 'role concerné : ';
                 if (mysqli_num_rows($result2)== 0) echo  "Personne<br>";
@@ -29,7 +29,7 @@
                 echo 'qui est la cible ? ';
                 $qui=$row["relation"];
                 $sql="select id,nom from role where id='$qui'";
-                $result2=mysqli_query($db,$sql);
+                $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result2)== 0) echo  "Personne<br>";
                 else {
                         $row4 = mysqli_fetch_assoc($result2);

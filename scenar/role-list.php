@@ -15,7 +15,7 @@ else {
    else $pnj=-1;
       $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
 // On vérifie si les champs sont vides
    if($gn==0 || $pnj==-1)
@@ -29,7 +29,7 @@ else {
                 {
                 $event=$_POST['besoin'];
                 $sql="delete from role where id='$event'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
                 }
 
 
@@ -39,7 +39,7 @@ include 'upper.php';
 echo '<center>';
 echo 'roles joueur<br>'."\n";
 $sql = " select id,nom from role where gn='$gn' and pnj='$pnj' order by nom";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
 	echo "<table><tr><td>nom</td><td>operation</td></tr>";
    while($row = mysqli_fetch_assoc($result)) {

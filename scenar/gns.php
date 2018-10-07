@@ -9,8 +9,8 @@ $id=$_SESSION['id'];
 include 'config.php';
 if (isset($_POST['gn'])) {
     $gn=$_POST['gn'];
-    $sql="insert into admin values('','$id','$gn','0','0','nouvel inscrit','0')"; 
-    mysqli_query($db,$sql);
+    $sql="insert into admin (gn,login,admin,medical,role,confirmed) values('$id','$gn','0','0','nouvel inscrit','0')"; 
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 $page=2;
 include 'upper.php';

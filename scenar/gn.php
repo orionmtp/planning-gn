@@ -13,7 +13,7 @@ else $gn=0;
 // On vérifie si les champs sont vides
     $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
 if($gn==0)
     {
@@ -39,12 +39,12 @@ if (isset($_POST['update'])){
     $pafpnj=mysqli_real_escape_string ($db,$_POST['pafpnj']);
     $url=mysqli_real_escape_string ($db,$_POST['url']);
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
-    mysqli_query($db,$sql);
+    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
 //les infos sur le GN
 $sql = "select nom,debut, fin, nb_pnj,nb_pj,paf_pnj,paf_pj,description,presentation,website,recur from gn where id='$gn'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<form method="POST" action="gn.php?gn='.$gn.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
@@ -73,7 +73,7 @@ echo '<br><br><a href=scenario.php?gn='.$gn.'>scenario du GN</a><br>';
 //la liste des scenaristes
 echo '<br><br>scenaristes enregistres<br>';
  $sql = "select login.id,pseudo,admin.admin from login inner join admin on admin.login=login.id where admin.gn='$gn' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<a href="scenar.php?scenar='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"];
@@ -87,7 +87,7 @@ echo '<br><br>evenements prevus<br>';
 
 //la liste des events
 $sql = "select id,nom,debut,duree,description,priorite from event where gn='$gn' order by debut asc, priorite asc limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>duree</td><td>description</td></tr>';
    while($row = mysqli_fetch_assoc($result)) {
@@ -104,7 +104,7 @@ echo '<table><tr><td>'."\n";
 //les PNJ inscrits
 echo '<center>PNJ presents</center><br>'."\n";
 $sql = " select login_jeu.id,pseudo from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn' and inscription.pnj='1' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<a href="joueur.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"] .'</a><br>'."\n";
@@ -115,7 +115,7 @@ echo '</td><td>'."\n";
 //les joueurs inscrits
 echo '<center>joueurs inscrits</center><br>'."\n";
 $sql = " select login_jeu.id,pseudo from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn' and inscription.pnj='0' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<a href="joueur.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"] .'</a><br>';
@@ -127,7 +127,7 @@ echo '<table><tr><td>'."\n";
 //les roles PNJ définis
 echo '<center>roles non joueur</center></td><td><center>roles joueurs</center></td></tr>'."\n";
 $sql = " select id,nom from role where gn='$gn' and pnj='1' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo "<tr><td>";
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
@@ -138,7 +138,7 @@ if (mysqli_num_rows($result) > 0) {
 echo '</td><td>'."\n";
 //les roles joueur definis
 $sql = " select id,nom from role where gn='$gn' and pnj='0' limit 10";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
 echo '<a href="role.php?role='. $row["id"]. '&gn='.$gn.'">'. $row["nom"] .'</a><br>';

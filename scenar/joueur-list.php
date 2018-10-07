@@ -18,7 +18,7 @@ else {
         }
             $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
     $page=26;
     include 'upper.php';
@@ -32,7 +32,7 @@ else {
     else {
         echo "informations joueur<br>\n";
         $sql = "select login_jeu.id,pseudo,nom,prenom,inscription.pnj,inscription.paiement from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn'";
-        $result=mysqli_query($db,$sql);
+        $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         echo "<table>\n<tr>\n<td>pseudo</td>\n<td>nom</td>\n<td>prenom</td>\n<td>PJ</td>\n<td>paiement</td>\n</tr>\n";
         if (mysqli_num_rows($result)>0) {
             while ($row=mysqli_fetch_assoc($result)) {

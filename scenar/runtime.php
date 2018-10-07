@@ -12,7 +12,7 @@ else {
     else $gn=0;
     $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
     // On vérifie si les champs sont vides
         if($gn==0) {
@@ -23,22 +23,22 @@ else {
             $now=date_create(date("H:i",strtotime("now")).":00");
             if (isset($_POST['update2'])) {
                 $sql="update gn set running='0',serial=NULL where id='$gn'";
-                mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
 				$sql="select  recur from gn where id='$gn'";
-                mysqli_query($db,$sql);
-				$result=mysqli_query($db,$sql);
+                mysqli_query($db,$sql)  or die(mysqli_error($db));
+				$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 $row = mysqli_fetch_assoc($result);
 				if ($row['recur'])
 				{
 					$sql="update objectif set succes=defvalue where gn='$gn'";
-					mysqli_query($db,$sql);
+					mysqli_query($db,$sql)  or die(mysqli_error($db));
 				}
                 $delta=0;
             }
             else {
                 if (isset($_POST['update'])) {
                     $sql = "select debut from gn where id='$gn'";
-                    $result=mysqli_query($db,$sql);
+                    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                     $row = mysqli_fetch_assoc($result);
                     $deb=date_create($row["debut"]);
 					$truc=date_format($deb,"H:i:s");
@@ -48,14 +48,14 @@ else {
                     $differ=date_format(date_add($zeroed,$delta),"H:i").":00";
 					$serial = substr(md5(microtime()),rand(0,26),16);
                     $sql="update gn set running='1',delta='$differ',avance='$avance', serial='$serial' where id='$gn'";
-                    mysqli_query($db,$sql);
+                    mysqli_query($db,$sql)  or die(mysqli_error($db));
                     $delta=date_create($differ);
                     $nom="qrcode/". $serial . ".png";
 				$message="http://run.planning-gn.fr/running.php?serial=".$serial;
                 }
                 else {
                     $sql = "select delta,avance,serial from gn where id='$gn'";
-                    $result=mysqli_query($db,$sql);
+                    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                     $row = mysqli_fetch_assoc($result);
                     $delta=date_create($row['delta']);
                     $avance=$row['avance'];
@@ -69,11 +69,11 @@ else {
             echo '<center>';
             //les infos sur le role a modifier
             $sql = "select running from gn where id='$gn'";
-            $result=mysqli_query($db,$sql);
+            $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
             $row = mysqli_fetch_assoc($result);
             if ($row['running']==0) {
                 $sql = "select debut,fin from gn where id='$gn'";
-                $result=mysqli_query($db,$sql);
+                $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 $row = mysqli_fetch_assoc($result);
                 $deb=date_create($row["debut"]);
                 $fin=date_create($row["fin"]);

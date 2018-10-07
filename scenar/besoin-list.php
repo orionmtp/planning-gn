@@ -15,7 +15,7 @@ else {
     else $pnj=0;
         $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
-    $result=mysqli_query($db,$sql);
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
     // On vérifie si les champs sont vides
     if($gn==0 || $event==0) {
@@ -27,7 +27,7 @@ include 'upper.php';
  echo '<center>';
         echo '<center>roles joueurs</center><br>'."\n";
 $sql = " select besoin.id,role.nom from besoin inner join role on besoin.role=role.id where besoin.event='$event' and role.pnj='$pnj'";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>role</td><td>joueur</td><td>operation</td></tr>'."\n";
    while($row = mysqli_fetch_assoc($result)) {
@@ -40,7 +40,7 @@ echo '<form method="POST" action="add-besoin.php?gn='.$gn.'&event='.$event.'&pnj
 echo '<select name="role">';
 echo '<option value="0" selected>nouveau role</option>';
 $sql="select id,nom from role where role.gn='$gn' and id not in (select role from besoin where event='$event') order by role.nom";
-$result=mysqli_query($db,$sql);
+$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<option value="'. $row["id"].'">'. $row["nom"] .'</option>';

@@ -57,8 +57,8 @@ else {
                     $row = mysqli_fetch_assoc($result);
                     $delta=date_create($row['delta']);
                     $avance=$row['avance'];
-		    $serial=$row['serial'];
-		    $nom="qrcode/" . $serial . ".png";
+					$serial=$row['serial'];
+					$message="http://run.planning-gn.fr/running.php?serial=".$serial;
                 }
             }    
             

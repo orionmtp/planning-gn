@@ -12,7 +12,7 @@ if (isset($_POST['gn'])) {
         $role=0;
     else
         $role=1;
-    $sql="insert into inscription (login,gn,pnj,paiement) values('','$id','$gn','$role','')"; 
+    $sql="insert into inscription (login,gn,pnj,paiement) values('0','$id','$gn','$role','0')"; 
     mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 include 'config.php';

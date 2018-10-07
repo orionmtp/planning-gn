@@ -64,4 +64,4 @@ $style = array(
 );
 
 //code name: QR, specify error correction level after semicolon (L,M,Q,H)
-$pdf->write2DBarcode('PHP QR Code :)', 'QR,L', '', '', 30, 30, $style, 'N');
+$pdf->write2DBarcode('PHP QR Code :)', 'QR,L', '0', '0', 30, 30, $style, 'N');

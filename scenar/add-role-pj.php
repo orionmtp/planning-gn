@@ -26,7 +26,7 @@ if($gn==0)
 // Aucun champ n'est vide, on peut enregistrer dans la table
 else     
     {
-        $sql = "insert into role values ('','','$gn','nom a modifier','description a modifier','0','0')";
+        $sql = "insert into role values ('0','0','$gn','nom a modifier','description a modifier','0','0')";
         mysqli_query($db,$sql)  or die(mysqli_error($db));
         $role=mysqli_insert_id($db);
         $head="location:role.php?gn=$gn&role=$role";

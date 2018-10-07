@@ -414,7 +414,7 @@
             $enc->size = $size;
             $enc->margin = $margin;
             
-            switch ($level.'') {
+            switch ($level.'0') {
                 case '0':
                 case '1':
                 case '2':
@@ -486,7 +486,7 @@
                 $err = ob_get_contents();
                 ob_end_clean();
                 
-                if ($err != '')
+                if ($err != '0')
                     QRtools::log($outfile, $err);
                 
                 $maxSize = (int)(QR_PNG_MAXIMUM_SIZE / (count($tab)+2*$this->margin));

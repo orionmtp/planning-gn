@@ -53,7 +53,7 @@ $sql = "select nom,debut,fin,description from gn where id='$gn'";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
-       echo 'GN<br>'."\n".$row["nom"] .'<br>'."\n".'<table>'."\n".'<tr>'."\n".'<td>du</td><td>'. $row["debut"] .'</td>'."\n".'<td> au </td>'."\n".'<td>'. $row["fin"] .'</td>'."\n".'</tr>'."\n".'</table><br>'."\n".''. $row["description"] . '<br>'."\n";
+       echo 'GN<br>'."\n".$row["nom"] .'<br>'."\n".'<table>'."\n".'<tr>'."\n".'<td>du</td><td>'. $row["debut"] .'</td>'."\n".'<td> au </td>'."\n".'<td>'. $row["fin"] .'</td>'."\n".'</tr>'."\n".'</table><br>'."\n".'0'. $row["description"] . '<br>'."\n";
    }
 }
     }

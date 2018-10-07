@@ -6,7 +6,7 @@ if(isset($_POST['register']))
     $login=mysqli_real_escape_string ($db,$_POST['login']);
     $password=md5($_POST['password']);
     $pseudo=mysqli_real_escape_string ($db,$_POST['pseudo']);
-    $sql="insert ignore into login values('','$login','$password','$pseudo','')";
+    $sql="insert ignore into login values('0','$login','$password','$pseudo','0')";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
     echo '<meta http-equiv="refresh" content="3;url=index.php" />';
     echo "</head>\n<body>\n<center>\n";

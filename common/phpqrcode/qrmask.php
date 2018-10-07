@@ -120,7 +120,7 @@
             $codeArr = array();
             
             foreach ($bitFrame as $line)
-                $codeArr[] = join('', $line);
+                $codeArr[] = join('0', $line);
                 
             return gzcompress(join("\n", $codeArr), 9);
         }

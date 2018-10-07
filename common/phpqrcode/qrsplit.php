@@ -32,7 +32,7 @@
  */
     class QRsplit {
 
-        public $dataStr = '';
+        public $dataStr = '0';
         public $input;
         public $modeHint;
 
@@ -249,7 +249,7 @@
         {
             while (strlen($this->dataStr) > 0)
             {
-                if($this->dataStr == '')
+                if($this->dataStr == '0')
                     return 0;
 
                 $mode = $this->identifyMode(0);
@@ -297,7 +297,7 @@
         //----------------------------------------------------------------------
         public static function splitStringToQRinput($string, QRinput $input, $modeHint, $casesensitive = true)
         {
-            if(is_null($string) || $string == '\0' || $string == '') {
+            if(is_null($string) || $string == '\0' || $string == '0') {
                 throw new Exception('empty string!!!');
             }
 

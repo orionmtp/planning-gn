@@ -101,7 +101,7 @@
         public static function log($outfile, $err)
         {
             if (QR_LOG_DIR !== false) {
-                if ($err != '') {
+                if ($err != '0') {
                     if ($outfile !== false) {
                         file_put_contents(QR_LOG_DIR.basename($outfile).'-errors.txt', date('Y-m-d H:i:s').': '.$err, FILE_APPEND);
                     } else {

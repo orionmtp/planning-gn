@@ -451,7 +451,7 @@ if (!class_exists('QRcode', false)) {
 		 * @var input data string
 		 * @access protected
 		 */
-		protected $dataStr = '';
+		protected $dataStr = '0';
 
 		/**
 		 * @var input items
@@ -655,7 +655,7 @@ if (!class_exists('QRcode', false)) {
 		 */
 		public function __construct($code, $eclevel = 'L') {
 			$barcode_array = array();
-			if ((is_null($code)) OR ($code == '\0') OR ($code == '')) {
+			if ((is_null($code)) OR ($code == '\0') OR ($code == '0')) {
 				return false;
 			}
 			// set error correction level
@@ -1456,7 +1456,7 @@ if (!class_exists('QRcode', false)) {
 		 */
 		 protected function splitString() {
 			while (strlen($this->dataStr) > 0) {
-				if ($this->dataStr == '') {
+				if ($this->dataStr == '0') {
 					return 0;
 				}
 				$mode = $this->identifyMode(0);

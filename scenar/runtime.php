@@ -50,7 +50,6 @@ else {
                     $delta=date_create($differ);
                     $nom="qrcode/". $serial . ".png";
 				$message="http://run.planning-gn.fr/running.php?serial=".$serial;
-					echo '<img src="create_png.php?text='.$message.'"/><br>';
                 }
                 else {
                     $sql = "select delta,avance,serial from gn where id='$gn'";
@@ -84,9 +83,8 @@ else {
                 
             }
             else {
-
                 echo "heure : ".date_format($now,"H:i")."<br>\ndelta : ".date_format($delta,"H:i")."<br>\n<br>\n";
-		echo "<a href=\"http://run.planning-gn.fr/running.php?serial=".$serial."\" target=\"new\"><img src=".$nom."></a><br>\n<br>\n";
+		echo "<a href=\"http://run.planning-gn.fr/running.php?serial=".$serial."\" target=\"new\"><img src=\"create_png.php?text=".$message."\"/></a><br>\n<br>\n";
                 echo '<form method="POST" action="runtime.php?gn='.$gn.'">'."\n";
                 echo '<input type="submit" value="arreter" name="update2"></form>'."\n";
             }

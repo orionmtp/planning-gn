@@ -57,7 +57,7 @@ include 'upper.php';
         }
 		if (isset($_POST['ajout'])){
             $style=$_POST['style']; 
-            $sql="insert into style_pnj values ('','$role','$style')";
+            $sql="insert into style_pnj (role,style) values ('','$role','$style')";
 			mysqli_query($db,$sql);
         }
         //les infos sur le role a modifier

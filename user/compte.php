@@ -81,7 +81,7 @@ else {
     }
 	if (isset($_POST['ajout'])){
         $style=$_POST['style']; 
-        $sql="insert into style_joueur values ('','$id','$style')";
+        $sql="insert into style_joueur (joueur,style) values ('$id','$style')";
 		mysqli_query($db,$sql);
     }
 	

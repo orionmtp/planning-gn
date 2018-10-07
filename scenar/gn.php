@@ -27,6 +27,7 @@ include 'upper.php';
 echo '<center>';
 
 if (isset($_POST['update'])){
+	if (isset($_POST['recur'])) $recur=1; else $recur=0;
     $nom=mysqli_real_escape_string ($db,$_POST['nom']);
     $debut=mysqli_real_escape_string ($db,$_POST['debut']);
     $fin=mysqli_real_escape_string ($db,$_POST['fin']);
@@ -37,18 +38,25 @@ if (isset($_POST['update'])){
     $pafpj=mysqli_real_escape_string ($db,$_POST['pafpj']);
     $pafpnj=mysqli_real_escape_string ($db,$_POST['pafpnj']);
     $url=mysqli_real_escape_string ($db,$_POST['url']);
-    $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr' where id='$gn'";
+    $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql);
 }
 
 //les infos sur le GN
-$sql = "select nom,debut, fin, nb_pnj,nb_pj,paf_pnj,paf_pj,description,presentation,website from gn where id='$gn'";
+$sql = "select nom,debut, fin, nb_pnj,nb_pj,paf_pnj,paf_pj,description,presentation,website,recur from gn where id='$gn'";
 $result=mysqli_query($db,$sql);
 echo '<form method="POST" action="gn.php?gn='.$gn.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'GN<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
        echo '<table><tr><td>du</td><td><input type="datetime-local" name="debut" value="'. date("Y-m-d\TH:i", strtotime($row["debut"])) .'"></td><td> au </td><td><input type="datetime-local" name="fin" value="'. date("Y-m-d\TH:i", strtotime($row["fin"])) .'"></td></tr></table><br>';
+		echo 'one shot <input type="checkbox" name="recur"';
+		$recur=$row['recur'];
+	   if ($recur!=0)
+		{
+			echo " checked";
+		}
+	   echo '><br>';
        echo '<table><tr><td>nombre de pnj</td><td>nombre de pj</td></tr>';
        echo '<tr><td><input type=number name=pnj value='.$row['nb_pnj'].' min=0></td><td><input type=number name=pj value='.$row['nb_pj'].' min=0></td></tr>';
        echo '<tr><td><center>PAF<br><input type=number name=pafpnj value='.$row['paf_pnj'].' min=0></center></td><td><center>PAF<br><input type=number name=pafpj value='.$row['paf_pj'].' min=0></center></td></tr>';
@@ -114,38 +122,42 @@ if (mysqli_num_rows($result) > 0) {
    }
    echo '<center><a href="joueur-list.php?gn='.$gn.'">liste complete</a></center><br>';
 }
-echo '</td></tr><tr><td>'."\n";
+echo '</td></tr></table>'."\n";
+echo '<table><tr><td>'."\n";
 //les roles PNJ définis
-echo '<center>roles non joueur</center><br>'."\n";
+echo '<center>roles non joueur</center></td><td><center>roles joueurs</center></td></tr>'."\n";
 $sql = " select id,nom from role where gn='$gn' and pnj='1' limit 10";
 $result=mysqli_query($db,$sql);
+echo "<tr><td>";
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
       echo '<a href="role.php?role='. $row["id"]. '&gn='.$gn.'">'. $row["nom"] .'</a><br>'."\n";
    }
-      echo '<center><a href="role-list.php?gn='.$gn.'&pnj=1">liste complete</a></center><br>'."\n";
 }
-echo '<form method="POST" action="add-role.php?gn='.$gn.'&pnj=1">'."\n";
-echo '<input type="text" name="nom" value="nom">'."\n";
-echo '<input type="submit" value="ajouter un role" name="pnj"></form>'."\n";
+
 echo '</td><td>'."\n";
 //les roles joueur definis
-echo '<center>roles joueurs</center><br>'."\n";
 $sql = " select id,nom from role where gn='$gn' and pnj='0' limit 10";
 $result=mysqli_query($db,$sql);
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
 echo '<a href="role.php?role='. $row["id"]. '&gn='.$gn.'">'. $row["nom"] .'</a><br>';
    }
-
-      echo '<center><a href="role-list.php?gn='.$gn.'&pnj=0">liste complete</a></center><br>';
-
 }
+mysqli_close($db);  // on ferme la connexion
+echo '</td></tr>'."\n";
+echo '<tr><td><center><a href="role-list.php?gn='.$gn.'&pnj=1">liste complete</a></center></td>';
+echo '<td><center><a href="role-list.php?gn='.$gn.'&pnj=0">liste complete</a></center></td></tr>'."\n";
+echo "<tr><td>";
+echo '<form method="POST" action="add-role.php?gn='.$gn.'&pnj=1">'."\n";
+echo '<input type="text" name="nom" value="nom">'."\n";
+echo '<input type="submit" value="ajouter un PNJ" name="pnj"></form>'."\n";
+echo "</td><td>";
 echo '<form method="POST" action="add-role.php?gn='.$gn.'&pnj=0">'."\n";
 echo '<input type="text" name="nom" value="nom">'."\n";
-echo '<input type="submit" value="ajouter un role PJ" name="pj"></form>'."\n";
+echo '<input type="submit" value="ajouter un PJ" name="pj"></form>'."\n";
 echo '</td></tr></table>'."\n";
-  mysqli_close($db);  // on ferme la connexion
+
 } 
  echo '<color=red>en cours de dev > <a href="moulinette.php?gn='.$gn.'">ici</a> < ved ed sruoc ne</color><br><br>';
  echo '<a href=menu.php>revenir au menu admin</a>';

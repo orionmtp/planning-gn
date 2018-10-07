@@ -50,6 +50,16 @@ include 'upper.php';
             $sql="delete from objectif where id='$obj'";
             mysqli_query($db,$sql);
         }
+		if (isset($_POST['deletestyle'])){
+            $style=$_POST['style'];
+			$sql="delete from style_pnj where role='$role' and style='$style'";
+            mysqli_query($db,$sql);
+        }
+		if (isset($_POST['ajout'])){
+            $style=$_POST['style']; 
+            $sql="insert into style_pnj values ('','$role','$style')";
+			mysqli_query($db,$sql);
+        }
         //les infos sur le role a modifier
         $sql = "select nom,description,login,pnj,pnj_recurent,background from role  where id='$role'";
         $result=mysqli_query($db,$sql);
@@ -144,6 +154,27 @@ include 'upper.php';
             }
             echo "</table>";
         }
+				echo '<br><center>style de jeu</center><br>'."\n";
+		$sql = " select style.id,style.nom from style inner join style_pnj on style.id=style_pnj.style where role='$role'";
+		$result=mysqli_query($db,$sql);
+		if (mysqli_num_rows($result) > 0) {
+			echo '<table><tr><td>style</td><td>operation</td></tr>'."\n";
+			while($row = mysqli_fetch_assoc($result)) {
+				echo '<tr><td>'.$row["nom"].'</td><td><form method=POST action="role.php?gn='.$gn.'&role='.$role.'"><input type="hidden" value="'.$row['id'].'" name="style"><input type="submit" value="supprimer" name="deletestyle"></form></td></tr>'."\n";
+			}
+			echo '</table><br>'."\n";
+		}
+		echo '<form method="POST" action="role.php?gn='.$gn.'&role='.$role.'">'."\n";
+		echo '<select name="style">';
+		$sql="select id,nom from style where id not in (select style from style_pnj where role='$role') order by nom";
+		$result=mysqli_query($db,$sql);
+		if (mysqli_num_rows($result) > 0) {
+		while($row = mysqli_fetch_assoc($result)) {
+			echo '<option value="'. $row["id"].'">'. $row["nom"] .'</option>';
+		}
+	}
+	echo '</select>';
+	echo '<input type="submit" value="ajouter un style de jeu" name="ajout"></form>'."\n";
     }
     echo '</center></body></html>';
 }

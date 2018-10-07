@@ -74,10 +74,21 @@ else {
             mysqli_query($db,$sql);
         }
     }
+	if (isset($_POST['deletestyle'])){
+        $style=$_POST['style'];
+		$sql="delete from style_joueur where joueur='$id' and style='$style'";
+        mysqli_query($db,$sql);
+    }
+	if (isset($_POST['ajout'])){
+        $style=$_POST['style']; 
+        $sql="insert into style_joueur values ('','$id','$style')";
+		mysqli_query($db,$sql);
+    }
+	
     $sql="select * from login_jeu where id='$id'";
     $result=mysqli_query($db,$sql);
     echo "<html>\n<head>\n</head>\n<body>\n<center>\ninformations sur le compte\n<br>\n<br>\n";
-    if (mysqli_num_rows($result) ==    1) {
+    if (mysqli_num_rows($result) == 1) {
         while($row = mysqli_fetch_assoc($result)) {
             echo '<form action="" method="post">'."\n";
             echo '<table border="0">'."\n";
@@ -148,6 +159,27 @@ else {
             echo '<input type = "submit" value = "mettre a jour">'."\n";
             echo "</form>\n";
        }
+	   	echo '<br><center>style de jeu</center><br>'."\n";
+		$sql = "select style.id,style.nom from style inner join style_joueur on style.id=style_joueur.style where style_joueur.joueur='$id'";
+		$result=mysqli_query($db,$sql);
+		if (mysqli_num_rows($result) > 0) {
+			echo '<table><tr><td>style</td><td>operation</td></tr>'."\n";
+			while($row = mysqli_fetch_assoc($result)) {
+				echo '<tr><td>'.$row["nom"].'</td><td><form method=POST action="compte.php"><input type="hidden" value="'.$row['id'].'" name="style"><input type="submit" value="supprimer" name="deletestyle"></form></td></tr>'."\n";
+			}
+			echo '</table><br>'."\n";
+		}
+		echo '<form method="POST" action="compte.php">'."\n";
+		echo '<select name="style">';
+		$sql="select id,nom from style where id not in (select style from style_joueur where joueur='$id') order by nom";
+		$result=mysqli_query($db,$sql);
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				echo '<option value="'. $row["id"].'">'. $row["nom"] .'</option>';
+			}
+		}
+		echo '</select>';
+		echo '<input type="submit" value="ajouter un style de jeu" name="ajout"></form>'."\n";
     }
     else echo "erreur<br>\nveuillez contacter un administrateur\n";
     echo '</center></body></html>';

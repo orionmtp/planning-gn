@@ -1,0 +1,7 @@
+- moulinette :
+prendre les preferences des gens et leur affecter les evenements en fonction du planning
+ 
+
+- run :
+corriger la gestion du temps specialement du retard (eventuellement les jours ?)
+rajouter la fonction de reduction du delta

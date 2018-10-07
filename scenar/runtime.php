@@ -49,9 +49,8 @@ else {
                     mysqli_query($db,$sql);
                     $delta=date_create($differ);
                     $nom="qrcode/". $serial . ".png";
-		    $message="http://run.planning-gn.fr/running.php?serial=".$serial;
-		    include "../phpqrcode/qrlib.php";
-		    QRcode::png($message, $nom, 'L', 4, 2);
+				$message="http://run.planning-gn.fr/running.php?serial=".$serial;
+					echo '<img src="../common/create_png.php?text='.$message.'"/><br>';
                 }
                 else {
                     $sql = "select delta,avance,serial from gn where id='$gn'";

@@ -41,7 +41,7 @@ if (mysqli_num_rows($result)==1) {
  //les roles PNJ participant à l'event
 echo "<center>\n";
 $message="http://run.planning-gn.fr/event.php?event=".$event;
-echo '<img src="create_png.php?text='.$message.'"/><br>';
+echo '<img src="../common/create_png.php?text='.$message.'"/><br>';
 echo '<br><br>personnages lies</center><br>';
 $sql = " select role.id,role.nom from besoin inner join role on role.id=besoin.role where besoin.event='$event'";
 $result=mysqli_query($db,$sql);

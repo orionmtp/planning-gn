@@ -5,3 +5,5 @@ prendre les preferences des gens et leur affecter les evenements en fonction du 
 - run :
 corriger la gestion du temps specialement du retard (eventuellement les jours ?)
 rajouter la fonction de reduction du delta
+
+- tout passer en date+heure et pas uniquement heure (pour les delta) avec ce que ca represente pour les jeux à répeter

@@ -70,11 +70,12 @@ include 'upper.php';
                 echo 'role<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
                 echo 'description : <input type="text" name="descr" value="'. $row["description"] .'"><br>'; 
                 echo 'type : <select name=pnj><option value=0';
-                if ($row['pnj']==0) echo ' selected';
+				$pnj=$row['pnj'];
+                if ($pnj==0) echo ' selected';
                 echo '>PJ</option><option value=1';
-                if ($row['pnj']==1) echo ' selected';
+                if ($pnj==1) echo ' selected';
                 echo '>PNJ</option></select><br>';
-                if ($row['pnj']==1) {
+                if ($pnj==1) {
                     echo 'recurent : <select name=recurent><option value=0';
                     if ($row['pnj_recurent']==0) echo ' selected';
                     echo '>generique</option><option value=1';
@@ -97,7 +98,7 @@ include 'upper.php';
             echo '<a href="joueur.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"] .'</a><form method="POST" action="role.php?gn='.$gn.'&role='.$role.'"></select><input type="submit" value="supprimer" name="update2"></form><br>';
         }
         echo '<form method="POST" action="role.php?gn='.$gn.'&role='.$role.'"><select name="login">';
-        $sql = "select login_jeu.id,login_jeu.pseudo from login_jeu inner join inscription on inscription.login=login_jeu.id where inscription.gn='$gn' and login_jeu.id not in (select login from role where gn='$gn') and inscription.pnj=0 order by pseudo";
+        $sql = "select login_jeu.id,login_jeu.pseudo from login_jeu inner join inscription on inscription.login=login_jeu.id where inscription.gn='$gn' and login_jeu.id not in (select login from role where gn='$gn') and inscription.pnj='$pnj' order by pseudo";
         $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {

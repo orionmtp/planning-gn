@@ -63,8 +63,8 @@ include 'upper.php';
         //les infos sur le role a modifier
         $sql = "select nom,description,login,pnj,pnj_recurent,background from role  where id='$role'";
         $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-        $joueur=0;
         echo '<form method="POST" action="role.php?gn='.$gn.'&role='.$role.'">';
+		$joueur=0;
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
                 echo 'role<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
@@ -90,13 +90,13 @@ include 'upper.php';
 
         echo '<input type="submit" value="mettre a jour" name="update"></form><br>'."\n";
         echo '<br><br>joueur affecte<br>';
-        if ($joueur>0){
-            echo '<br>le cesar du meilleur role principal est attribue a :<br>';
+		if ($joueur>0) {
+            echo '<br>le cesar du meilleur role est attribue a :<br>';
             $sql = "select login_jeu.id,login_jeu.pseudo from login_jeu inner join inscription on inscription.login=login_jeu.id where login_jeu.id='$joueur' and inscription.gn='$gn'";
             $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
             $row = mysqli_fetch_assoc($result);
-            echo '<a href="joueur.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"] .'</a><form method="POST" action="role.php?gn='.$gn.'&role='.$role.'"></select><input type="submit" value="supprimer" name="update2"></form><br>';
-        }
+            echo '<a href="joueur.php?id='. $row["id"]. '&gn='.$gn.'">'. $row["pseudo"] .'</a><form method="POST" action="role.php?gn='.$gn.'&role='.$role.'"></select><input type="submit" value="supprimer" name="update2"></form><br>';		
+		}
         echo '<form method="POST" action="role.php?gn='.$gn.'&role='.$role.'"><select name="login">';
         $sql = "select login_jeu.id,login_jeu.pseudo from login_jeu inner join inscription on inscription.login=login_jeu.id where inscription.gn='$gn' and login_jeu.id not in (select login from role where gn='$gn') and inscription.pnj='$pnj' order by pseudo";
         $result=mysqli_query($db,$sql)  or die(mysqli_error($db));

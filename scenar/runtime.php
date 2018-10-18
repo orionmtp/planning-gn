@@ -30,7 +30,15 @@ else {
                 $row = mysqli_fetch_assoc($result);
 				if ($row['recur'])
 				{
+					$sql="update objectif set succes=defvalue where gn='$gn';update role set login='0' where gn='$gn'; delete from planning where gn='$gn'";
+					mysqli_query($db,$sql)  or die(mysqli_error($db));
+				}
+				else {
 					$sql="update objectif set succes=defvalue where gn='$gn'";
+					mysqli_query($db,$sql)  or die(mysqli_error($db));
+					$sql="update role set login='0' where gn='$gn' and pnj='1'";
+					mysqli_query($db,$sql)  or die(mysqli_error($db));
+					$sql="delete from planning where gn='$gn'";
 					mysqli_query($db,$sql)  or die(mysqli_error($db));
 				}
                 $delta=0;
@@ -51,7 +59,7 @@ else {
                     mysqli_query($db,$sql)  or die(mysqli_error($db));
                     $delta=date_create($differ);
                     $nom="qrcode/". $serial . ".png";
-				$message="http://run.planning-gn.fr/running.php?serial=".$serial;
+					$message="http://run.planning-gn.fr/running.php?serial=".$serial;
                 }
                 else {
                     $sql = "select delta,avance,serial from gn where id='$gn'";

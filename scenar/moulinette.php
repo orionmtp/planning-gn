@@ -13,9 +13,6 @@ else {
     $sql="select id from admin where gn='$gn' and login='$id'";
     $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     if (mysqli_num_rows($result) > 0) {
-		$page=13;
-		include 'upper.php';
-		echo '<center>';
 // On vérifie si les champs sont vides
 		if($gn==0)
 		{
@@ -32,7 +29,6 @@ else {
 
 			while ((mysqli_num_rows($result1) > 0)&&(mysqli_num_rows($result2) > 0)) {
 				$row = mysqli_fetch_assoc($result2);
-echo "result 1a : ".mysqli_num_rows($result1)." result 2a : ".mysqli_num_rows($result2)."<br>";
 				$besoin=$row['besoin'];
 				$perso=$row['joueur'];
 				$recur=$row['recur'];
@@ -44,36 +40,36 @@ echo "result 1a : ".mysqli_num_rows($result1)." result 2a : ".mysqli_num_rows($r
 					$row = mysqli_fetch_assoc($result3);
 					$deb=$row['deb'];
 					$fin=$row['fin'];
-	echo "infos : ".$besoin.",".$perso." ".$deb.",".$fin.",".$gn."<br>";
 					$sql="insert into planning (besoin, joueur, debut, fin, gn) values ('$besoin','$perso','$deb','$fin','$gn')";
 					mysqli_query($db,$sql)  or die(mysqli_error($db));
 				}
 				else {
 					$sql="select id from besoin where role='$role'";
-	echo "recurrence";
 					$result4=mysqli_query($db,$sql)  or die(mysqli_error($db));
 					if ((mysqli_num_rows($result4) > 0)) {
 						while ($row = mysqli_fetch_assoc($result4)) {
 							$besoin2=$row['id'];
-	echo "besoin : ".$besoin2."<br>";
 							$sql="select besoin.id,debut-prepa as deb,debut+duree as fin from event inner join besoin on event.id=besoin.event where besoin.id='$besoin2' and besoin.gn='$gn' limit 1";
 							$result3=mysqli_query($db,$sql)  or die(mysqli_error($db));
 							$row = mysqli_fetch_assoc($result3);
 							$deb=$row['deb'];
 							$fin=$row['fin'];
-			echo "infos : ".$besoin.",".$perso." ".$deb.",".$fin.",".$gn."<br>";
 							$sql="insert into planning (besoin, joueur, debut, fin, gn) values ('$besoin2','$perso','$deb','$fin','$gn')";
 							mysqli_query($db,$sql)  or die(mysqli_error($db));
+							$sql="update role set login='$perso' where id='$role'";
+							mysqli_query($db,$sql)  or die(mysqli_error($db));
+
 						}
 					}
 				}
 				$result1=mysqli_query($db,$sql1)  or die(mysqli_error($db));
 				$result2=mysqli_query($db,$sql2)  or die(mysqli_error($db));
 			}
-echo "result 1 ".mysqli_num_rows($result1)." result 2 ".mysqli_num_rows($result2)."<br>";
 
 		}
 	}
+	$head="location:gn.php?gn=$gn";
+    header($head);
 }
 
 ?>

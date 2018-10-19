@@ -234,7 +234,7 @@
         public static function log($outfile, $err)
         {
             if (QR_LOG_DIR !== false) {
-                if ($err != '0') {
+                if ($err != '') {
                     if ($outfile !== false) {
                         file_put_contents(QR_LOG_DIR.basename($outfile).'-errors.txt', date('Y-m-d H:i:s').': '.$err, FILE_APPEND);
                     } else {
@@ -1969,7 +1969,7 @@
  */
     class QRsplit {
 
-        public $dataStr = '0';
+        public $dataStr = '';
         public $input;
         public $modeHint;
 
@@ -2186,7 +2186,7 @@
         {
             while (strlen($this->dataStr) > 0)
             {
-                if($this->dataStr == '0')
+                if($this->dataStr == '')
                     return 0;
 
                 $mode = $this->identifyMode(0);
@@ -2234,7 +2234,7 @@
         //----------------------------------------------------------------------
         public static function splitStringToQRinput($string, QRinput $input, $modeHint, $casesensitive = true)
         {
-            if(is_null($string) || $string == '\0' || $string == '0') {
+            if(is_null($string) || $string == '\0' || $string == '') {
                 throw new Exception('empty string!!!');
             }
 
@@ -2592,7 +2592,7 @@
             $codeArr = array();
             
             foreach ($bitFrame as $line)
-                $codeArr[] = join('0', $line);
+                $codeArr[] = join('', $line);
                 
             return gzcompress(join("\n", $codeArr), 9);
         }
@@ -3222,7 +3222,7 @@
             $enc->size = $size;
             $enc->margin = $margin;
             
-            switch ($level.'0') {
+            switch ($level.'') {
                 case '0':
                 case '1':
                 case '2':
@@ -3294,7 +3294,7 @@
                 $err = ob_get_contents();
                 ob_end_clean();
                 
-                if ($err != '0')
+                if ($err != '')
                     QRtools::log($outfile, $err);
                 
                 $maxSize = (int)(QR_PNG_MAXIMUM_SIZE / (count($tab)+2*$this->margin));

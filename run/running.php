@@ -18,20 +18,20 @@
         }
         else {
 	if (isset($_POST['changer'])) {
-	 $obj=$_POST['obj'];
-	 $sql = " select succes from objectif where id='$obj'";
-	$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-	$row = mysqli_fetch_assoc($result);
-	if ($row['succes']==1) $sql = " update objectif set succes='0' where id='$obj'";
-	else  $sql = " update objectif set succes='1' where id='$obj'";
-	$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-	    }
-            $zeroed=date_create("00:00:00");
-            $now=date_create(date("H:i",strtotime("now"))); 
-            $sql = "select delta,avance from gn where id='$gn'";
-            $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-            $row = mysqli_fetch_assoc($result);
-            $delta=date_create($row['delta']);
+		$obj=$_POST['obj'];
+		$sql = " select succes from objectif where id='$obj'";
+		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+		$row = mysqli_fetch_assoc($result);
+		if ($row['succes']==1) $sql = " update objectif set succes='0' where id='$obj'";
+		else  $sql = " update objectif set succes='1' where id='$obj'";
+		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+	}
+	$zeroed=date_create(date("Y-m-d 00:00:00",strtotime("now")));
+    $now=date_create(date("Y-m-d H:i",strtotime("now"))); 
+    $sql = "select delta,avance from gn where id='$gn'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+    $row = mysqli_fetch_assoc($result);
+    $delta=date_create($row['delta']);
             $avance=$row['avance'];
 //            $page=30;
 	    echo "<html><header><title>running</title><meta http-equiv=refresh content=60></header><body>";
@@ -46,35 +46,35 @@
                 $row = mysqli_fetch_assoc($result);
                 $deb=date_create($row["debut"]);
                 $fin=date_create($row["fin"]);
-                echo "actuelle ". date_format($now,"H:i")."<br>\n";
-                echo "debut ". date_format($deb,"H:i")."<br>\n";
-                echo "fin ".date_format($fin,"H:i")."<br>\n";
+                echo "actuelle ". date_format($now,"Y-m-d H:i")."<br>\n";
+                echo "debut ". date_format($deb,"Y-m-d H:i")."<br>\n";
+                echo "fin ".date_format($fin,"Y-m-d H:i")."<br>\n";
                 echo '<form method="POST" action="runtime.php?gn='.$gn.'">'."\n";
                 echo '<input type="submit" value="lancer le GN !" name="update"></form><br>'."\n";
                 
             }
             else {
-                echo "heure : ".date_format($now,"H:i")."<br>\ndelta : ".date_format($delta,"H:i");
+                echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\ndelta : ".date_format($delta,"Y-m-d H:i");
 if ($avance==1) echo " d'avance";
 else echo " de retard";
 echo "<br>\n<br>\n";
 
 
-                $test=date_format($delta,"H:i");
+                $test=date_format($delta,"Y-m-d H:i");
                 $differ=date_diff($delta,$zeroed);
 
-if ($avance==1) $situation=date_format(date_sub($now,$differ),"H:i");
-else $situation=date_format(date_add($now,$differ),"H:i");
+if ($avance==1) $situation=date_format(date_sub($now,$differ),"Y-m-d H:i");
+else $situation=date_format(date_add($now,$differ),"Y-m-d H:i");
 if (isset($_POST['changerevent'])){
 $debut=date_create($_POST['debut']);
 $prepa=date_create($_POST['prepa']);
 $fin=date_create($_POST['fin']);
 $id=$_POST['obj'];
 if ($avance==1){
-$debut1=date_format(date_sub($debut,$differ),"H:i:s");$prepa1=date_format(date_sub(date_sub($prepa,$differ),date_sub($debut,$differ)),"H:i:s");$fin1=date_format(date_sub(date_sub($fin,$differ),date_sub($debut,$differ)),"H:i:s");
+$debut1=date_format(date_sub($debut,$differ),"Y-m-d H:i");$prepa1=date_format(date_sub(date_sub($prepa,$differ),date_sub($debut,$differ)),"Y-m-d H:i");$fin1=date_format(date_sub(date_sub($fin,$differ),date_sub($debut,$differ)),"Y-m-d H:i");
 }
 else {
-$debut1=date_format(date_add($debut,$differ),"H:i:s");$prepa1=date_format(date_sub(date_add($prepa,$differ),date_add($debut,$differ)),"H:i:s");$fin1=date_format(date_sub(date_add($fin,$differ),date_add($debut,$differ)),"H:i:s");
+$debut1=date_format(date_add($debut,$differ),"Y-m-d H:i");$prepa1=date_format(date_sub(date_add($prepa,$differ),date_add($debut,$differ)),"Y-m-d H:i");$fin1=date_format(date_sub(date_add($fin,$differ),date_add($debut,$differ)),"Y-m-d H:i");
 }
 $sql="update event set debut='$debut1', duree='$fin1', prepa='$prepa1' where id='$id'";
 echo $sql;
@@ -104,7 +104,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                         $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="time" value="'.date_format($deb_prepa,"H:i").'" name="prepa"></td><td><input type="time" name="debut" value="'.date_format($deb_event,"H:i").'"></td><td><input type="time" name="fin" value="'.date_format($fin_event,"H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
+echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="datetime" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="datetime" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
                     }
 }
                     echo "</table>\n";
@@ -132,7 +132,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                         $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="time" value="'.date_format($deb_prepa,"H:i").'" name="prepa"></td><td><input type="time" name="debut" value="'.date_format($deb_event,"H:i").'"></td><td><input type="time" name="fin" value="'.date_format($fin_event,"H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
+                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="datetime" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="datetime" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
                     }
                 }
 }
@@ -158,7 +158,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                         $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="time" value="'.date_format($deb_prepa,"H:i").'" name="prepa"></td><td><input type="time" name="debut" value="'.date_format($deb_event,"H:i").'"></td><td><input type="time" name="fin" value="'.date_format($fin_event,"H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
+echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="time" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="time" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
                     }
                 }
 }
@@ -185,7 +185,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
 $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>'.date_format($deb_prepa,"H:i:s").'</td><td>'.date_format($deb_event,"H:i:s").'</td><td>'.date_format($fin_event,"H:i:s").'</td></tr>';
+                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>'.date_format($deb_prepa,"Y-m-d H:i").'</td><td>'.date_format($deb_event,"Y-m-d H:i").'</td><td>'.date_format($fin_event,"Y-m-d H:i").'</td></tr>';
                     }
                 }
 }

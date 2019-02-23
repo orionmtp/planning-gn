@@ -55,11 +55,9 @@
             }
             else {
                 echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\ndelta : ".date_format($delta,"H:i");
-if ($avance==1) echo " d'avance";
-else echo " de retard";
-echo "<br>\n<br>\n";
-
-
+				if ($avance==1) echo " d'avance";
+				else echo " de retard";
+				echo "<br>\n<br>\n";
                 $test=date_format($delta,"H:i");
                 $differ=date_diff($delta,$zeroed);
 
@@ -83,11 +81,11 @@ echo $sql;
 
 
 if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1,subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, prepa1";
-else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(event.debut,event.prepa),delta) as prepa1,addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, prepa1";
+else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, prepa1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 echo "en cours de jeu<br>\n";
                 if (mysqli_num_rows($result) > 0) {
-                    echo '<table><tr><td>nom</td><td>priorite</td><td>preparation</td><td>debut</td><td>fin</td></tr>';
+                    echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>fin</td></tr>';
                     while($row = mysqli_fetch_assoc($result)) {
 
 
@@ -102,9 +100,8 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
 			}
 			if ($activ==1) {
                         $deb_event=date_create($row['debut1']);
-                        $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="datetime" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="datetime" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
+echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td><input type="datetime" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="datetime" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td></tr>';
                     }
 }
                     echo "</table>\n";

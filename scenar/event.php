@@ -58,8 +58,8 @@ if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'event<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
        echo '<table><tr><td>debute le </td><td><input type=datetime name="debut" step="60" value="'. date("Y-m-d H:i", strtotime($row["debut"])) .'"></td>';
-       echo '<td> pour une duree de </td><td><input type=datetime name="duree" step="60" value="'. date("Y-m-d H:i", strtotime($row["duree"])) .'"></td>';
-       echo '<td> et un temps de preparation de </td><td><input type="datetime" step="60" name="prepa" value="'. date("Y-m-d H:i", strtotime($row["prepa"])) .'"></td></tr></table><br>';
+       echo '<td> pour une duree de </td><td><input type=time name="duree" step="60" value="'. date("H:i", strtotime($row["duree"])) .'"></td>';
+       echo '<td> et un temps de preparation de </td><td><input type="time" step="60" name="prepa" value="'. date("H:i", strtotime($row["prepa"])) .'"></td></tr></table><br>';
        echo 'priorite : <select name="prio">';
        for ($i=1;$i<=10;$i++){
            echo '<option value='.$i;

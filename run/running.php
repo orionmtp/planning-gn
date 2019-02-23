@@ -54,13 +54,13 @@
                 
             }
             else {
-                echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\ndelta : ".date_format($delta,"Y-m-d H:i");
+                echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\ndelta : ".date_format($delta,"H:i");
 if ($avance==1) echo " d'avance";
 else echo " de retard";
 echo "<br>\n<br>\n";
 
 
-                $test=date_format($delta,"Y-m-d H:i");
+                $test=date_format($delta,"H:i");
                 $differ=date_diff($delta,$zeroed);
 
 if ($avance==1) $situation=date_format(date_sub($now,$differ),"Y-m-d H:i");

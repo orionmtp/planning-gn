@@ -105,14 +105,15 @@ echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $r
                     }
 }
                     echo "</table>\n";
-
                 }
+				
+				//en cours de prepa
                 echo "<br>en cours de preparation<br>\n";
 if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1, subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and subtime(event.debut,event.prepa)<='$situation' and '$situation'<=event.debut order by prepa1";
 else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(event.debut,event.prepa),delta) as prepa1, addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and subtime(event.debut,event.prepa)<='$situation' and '$situation'<=event.debut order by prepa1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result) > 0) {
-                    echo '<table><tr><td>nom</td><td>priorite</td><td>prepa</td><td>debut</td><td>heure fin</td><td>operation</td></tr>';
+                    echo '<table><tr><td>nom</td><td>priorite</td><td>prepa</td><td>debut</td><td>operation</td></tr>';
                     while($row = mysqli_fetch_assoc($result)) {
                         $id_event=$row['id'];
                         $sql1="select cond,succes from pre_requis inner join objectif on pre_requis.objectif=objectif.id where pre_requis.event='$id_event'";
@@ -129,17 +130,19 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                         $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="datetime" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="datetime" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
+                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="datetime" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
                     }
                 }
 }
                 echo "</table><br>\n";
+				
+				//a venir
                 echo "a venir<br>\n";
 if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1, subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where  gn='$gn' and '$situation'<subtime(event.debut,event.prepa) order by prepa1";
 else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(event.debut,event.prepa),delta) as prepa1, addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where  gn='$gn' and '$situation'<subtime(event.debut,event.prepa) order by prepa1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result) > 0) {
-                    echo '<table><tr><td>nom</td><td>priorite</td><td>preparation</td><td>debut</td><td>heure fin</td></tr>';
+                    echo '<table><tr><td>nom</td><td>priorite</td><td>preparation</td><td>heure fin</td></tr>';
                     while($row = mysqli_fetch_assoc($result)) {
                         $id_event=$row['id'];
                         $sql1="select cond,succes from pre_requis inner join objectif on pre_requis.objectif=objectif.id where pre_requis.event='$id_event'";
@@ -155,7 +158,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                         $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="time" name="debut" value="'.date_format($deb_event,"Y-m-d H:i").'"></td><td><input type="time" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
+echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><form method="POST" action="running.php?serial='.$serial.'"><td><input type="datetime" value="'.date_format($deb_prepa,"Y-m-d H:i").'" name="prepa"></td><td><input type="datetime" name="fin" value="'.date_format($fin_event,"Y-m-d H:i").'"></td><td><input type="hidden" name="obj" value="'.$row["id"].'"><input type="submit" value="changer" name="changerevent"></form></td></tr>';
                     }
                 }
 }
@@ -165,7 +168,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 echo "termines<br>\n";
                 if (mysqli_num_rows($result) > 0) {
-                    echo '<table><tr><td>nom</td><td>priorite</td><td>prepa</td><td>debut</td><td>heure fin</td></tr>';
+                    echo '<table><tr><td>nom</td><td>heure fin</td></tr>';
                     while($row = mysqli_fetch_assoc($result)) {
                         $id_event=$row['id'];
                         $sql1="select cond,succes from pre_requis inner join objectif on pre_requis.objectif=objectif.id where pre_requis.event='$id_event'";
@@ -182,7 +185,7 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
 $deb_event=date_create($row['debut1']);
                         $deb_prepa=date_create($row['prepa1']);
                         $fin_event=date_create($row['fin']);
-                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>'.date_format($deb_prepa,"Y-m-d H:i").'</td><td>'.date_format($deb_event,"Y-m-d H:i").'</td><td>'.date_format($fin_event,"Y-m-d H:i").'</td></tr>';
+                        echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $row["nom"] .'</a></td><td>'.date_format($fin_event,"Y-m-d H:i").'</td></tr>';
                     }
                 }
 }

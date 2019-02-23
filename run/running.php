@@ -81,7 +81,7 @@ echo $sql;
 
 
 if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1,subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, prepa1";
-else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, prepa1";
+else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, debut1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 echo "en cours de jeu<br>\n";
                 if (mysqli_num_rows($result) > 0) {

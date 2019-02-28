@@ -7,18 +7,19 @@ if(!isset($_SESSION['id'])){
 else {
    include 'config.php';
    $orga=$_SESSION['id'];
-    $sql="select id from admin where gn='$gn' and login='$orga' and confirmed='1'";
-    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-    if (mysqli_num_rows($result) > 0) {
-// On commence par récupérer les champs
-   if (isset($_GET['gn'])) 
+  if (isset($_GET['gn'])) 
        $gn=$_GET['gn'];
    else {
        if (isset($_POST['gn']))
            $gn=$_POST['gn']; 
        else 
            $gn=0;
-    }
+    } 
+ $sql="select id from admin where gn='$gn' and login='$orga' and confirmed='1'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+    if (mysqli_num_rows($result) > 0) {
+// On commence par récupérer les champs
+ 
    if (isset($_GET['id'])) 
        $id=$_GET['id'];
    else {
@@ -36,7 +37,7 @@ else {
             $sql="update inscription set paiement='0' where login='$id' and gn='$gn'";
             mysqli_query($db,$sql)  or die(mysqli_error($db));
         }
-        
+
     }
     $sql = " select admin.medical,admin.admin from admin where admin.gn='$gn' and admin.login='$orga' ";
     $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
@@ -57,17 +58,20 @@ echo '<center>';
    else     
    {
    echo '<center>informations joueur<br>'."\n";
-
-$sql = " select login_jeu.*,inscription.pnj,inscription.paiement from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn' and inscription.login='$id'";
+	$sql = " select login_jeu.*,inscription.login,inscription.pnj,inscription.paiement from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn' and inscription.login='$id'";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) == 1) {
    $row=mysqli_fetch_assoc($result);
-   echo $row['pseudo'].'<br>';
+   echo '<form action="" method="post">';
+   echo '<input type="text" name=nom value="'.$row['pseudo'].'"><br>';
    echo "inscrit en tant que ";
-   if ($row['pnj']==1)
-       echo "PNJ";
-   else
-       echo 'joueur';
+   echo '<select name=pnj><option value=0';
+	$pnj=$row['pnj'];
+    if ($pnj==0) echo ' selected';
+                echo '>PJ</option><option value=1';
+                if ($pnj==1) echo ' selected';
+                echo '>PNJ</option></select><br>';
+
    echo '<br>';
    echo '<table>';
    echo "<tr><td>nom</td><td>".$row['nom']."</td></tr>";
@@ -89,7 +93,6 @@ if (mysqli_num_rows($result) == 1) {
        echo $row['sante']."<br>";
    }
    echo '<br>';
-   echo '<form action="" method="post">';
    echo 'paiement recu <input type="checkbox" name=paiement';
       if ($row['paiement']==1)
        echo ' checked';

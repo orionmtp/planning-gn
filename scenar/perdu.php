@@ -11,7 +11,7 @@ if(isset($_POST['forgotten']))
     $sql="update login set password='$password' where login='$login')";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
     $message="vous avez demandé un nouveau mot de passe pour planningGN\r\nle mot de passe suivant a été généré pour vous : ". $rand ."\r\nVous pouvez vous connecter avec immediatement\r\nL'équipe planningGN";
-    $headers = 'From: planning@creadvance.org' . "\r\n" . 'Reply-To: planning@creadvance.org' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+    $headers = 'From: planning@planning-gn.fr' . "\r\n" . 'Reply-To: planning@planning-gn.fr' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
     mail($login,"mot de passe planningGN perdu",$message,$headers);
     echo '<meta http-equiv="refresh" content="3;url=index.php" />';
     echo "</head>\n<body>\n<center>\n";

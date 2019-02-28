@@ -31,7 +31,7 @@ else {
     // Aucun champ n'est vide, on peut enregistrer dans la table
     else {
         echo "informations joueur<br>\n";
-        $sql = "select login_jeu.id,pseudo,nom,prenom,inscription.pnj,inscription.paiement from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn'";
+        $sql = "select login_jeu.id,pseudo,login_jeu.nom,prenom,inscription.pnj,inscription.paiement from login_jeu inner join inscription on login_jeu.id=inscription.login where inscription.gn='$gn'";
         $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
         echo "<table>\n<tr>\n<td>pseudo</td>\n<td>nom</td>\n<td>prenom</td>\n<td>PJ</td>\n<td>paiement</td>\n</tr>\n";
         if (mysqli_num_rows($result)>0) {
@@ -48,6 +48,9 @@ else {
             }
             echo "</table>\n";
         }
+	echo '<form action="add-joueur.php?gn='.$gn.'" method="post">';
+    echo '<input type="text" name=nom value="nom a modifier">';
+   echo '<input type = "submit" name="envoi" value = "updater"><br>';
     }
     echo '</center></body></html>';
 }   

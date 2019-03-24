@@ -34,7 +34,7 @@ else
 			$sql="select id from inscription where gn='$gn' and login='$role'";
 			$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 			if (mysqli_num_rows($result) == 0) {
-				$sql="insert into inscription (login,gn,pnj,paiement) values ('$role','$gn','0','0')";
+				$sql="insert into inscription (login,gn,pnj,paiement,password) values ('$role','$gn','0','0','')";
 				mysqli_query($db,$sql)  or die(mysqli_error($db));
 			}
 		}
@@ -43,7 +43,7 @@ else
 			$sql = "insert into login_jeu (pseudo,email) values ('$nom','$rand')";
 			mysqli_query($db,$sql)  or die(mysqli_error($db));
 			$role=mysqli_insert_id($db);
-			$sql="insert into inscription (login,gn,pnj,paiement) values ('$role','$gn','0','0')";
+			$sql="insert into inscription (login,gn,pnj,paiement,password) values ('$role','$gn','0','0','')";
 			 mysqli_query($db,$sql)  or die(mysqli_error($db));
 		}
         $head="location:joueur.php?gn=".$gn."&id=".$role;

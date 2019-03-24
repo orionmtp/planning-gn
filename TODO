@@ -3,12 +3,10 @@ revoir la gestion des PNJ reccurents
  
 
 - run :
-corriger la gestion du temps specialement du retard (eventuellement les jours ?)
 rajouter la fonction de reduction du delta
 
 - revoir le reset
 
-- tout passer en date+heure et pas uniquement heure (pour les delta) avec ce que ca represente pour les jeux à répeter
 
 
 1/ gerer le preupload pour rajouter la securité

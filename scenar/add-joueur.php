@@ -40,7 +40,7 @@ else
 		}
 		else {
 			$rand = substr(md5(microtime()),rand(0,26),8);
-			$sql = "insert into login_jeu (pseudo,email,password,nom,prenom) values ('$nom','$rand','$rand','','')";
+			$sql = "insert into login_jeu (pseudo,email,password) values ('$nom','$rand','$rand')";
 			mysqli_query($db,$sql)  or die(mysqli_error($db));
 			$role=mysqli_insert_id($db);
 			$sql="insert into inscription (login,gn,pnj,paiement) values ('$role','$gn','0','0')";

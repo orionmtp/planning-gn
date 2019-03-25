@@ -23,10 +23,19 @@ else {
    }	   
    if (isset($_POST['update']))
    {
-	   $compte=$_POST['id'];
-	   $admin=$_POST['admin'];
-	   $doc=$_POST['doc'];
-	   $valid=$_POST['valid'];
+	   $compte=$_POST['compte'];
+	   if (isset($_POST['admin']))
+			$admin=1;
+		else 
+			$admin=0;
+		if (isset($_POST['doc']))
+			$doc=1;
+		else 
+			$doc=0;
+		if (isset($_POST['valid']))
+			$valid=1;
+		else 
+			$valid=0;
 	   $sql="update admin set admin='$admin',medical=$doc,confirmed='$valid' where login='$compte' and gn='$gn'";
 	   mysqli_query($db,$sql)  or die(mysqli_error($db));
    }

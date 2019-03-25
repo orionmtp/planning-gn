@@ -18,7 +18,7 @@ include 'config.php';
 echo '<center>';
 echo 'liste des GN en cours<br>';
 $date=date("Y-m-d H:i").":00";
-$sql="select gn.* from gn  left join admin on admin.gn=gn.id where admin.gn IS NULL and debut>'$date'  order by debut";
+$sql="select gn.* from gn  left join admin on admin.gn=gn.id where admin.login!=$gn and debut>'$date'  order by debut";
 $result=mysqli_query($db,$sql) or die('Erreur SQL !'.$sql.'<br>'.mysql_error());
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>nom</td><td>debut</td><td>fin</td><td></td></tr>';

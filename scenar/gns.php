@@ -9,7 +9,7 @@ $id=$_SESSION['id'];
 include 'config.php';
 if (isset($_POST['gn'])) {
     $gn=$_POST['gn'];
-    $sql="insert into admin (gn,login,admin,medical,role,confirmed) values('$id','$gn','0','0','nouvel inscrit','0')"; 
+    $sql="insert into admin (login,gn,admin,medical,role,confirmed) values('$id','$gn','0','0','nouvel inscrit','0')"; 
     mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 $page=2;
@@ -18,7 +18,7 @@ include 'config.php';
 echo '<center>';
 echo 'liste des GN en cours<br>';
 $date=date("Y-m-d H:i").":00";
-$sql="select nom from gn where id not in (select gn from admin where admin.login='$gn') and debut>'$date' order by debut";
+$sql="select id,nom from gn where id not in (select gn from admin where admin.login='$id') and debut>'$date' order by debut";
 echo $sql;
 $result=mysqli_query($db,$sql) or die('Erreur SQL !'.$sql.'<br>'.mysql_error());
 if (mysqli_num_rows($result) > 0) {

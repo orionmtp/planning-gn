@@ -17,7 +17,7 @@ else {
 			$gn=0;
    if (isset($_POST['delete']))
    {
-		$compte=$_POST['id'];
+		$compte=$_POST['compte'];
 		$sql="delete from admin where login='$compte' and gn='$gn'";
 		mysqli_query($db,$sql)  or die(mysqli_error($db));
    }	   

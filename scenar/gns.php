@@ -19,6 +19,7 @@ echo '<center>';
 echo 'liste des GN en cours<br>';
 $date=date("Y-m-d H:i").":00";
 $sql="select nom from gn where id not in (select gn from admin where admin.login='$gn') and debut>'$date' order by debut";
+echo $sql;
 $result=mysqli_query($db,$sql) or die('Erreur SQL !'.$sql.'<br>'.mysql_error());
 if (mysqli_num_rows($result) > 0) {
     echo '<table><tr><td>nom</td><td>debut</td><td>fin</td><td></td></tr>';

@@ -31,9 +31,11 @@ else
 		if (mysqli_num_rows($result) > 0) {
 			$row=mysqli_fetch_assoc($result);
 			$role=$row['id'];
-			$sql="select id from inscription where gn='$gn' and login='$role'";
+			$sql="select id from login_jeu where gn='$gn' and login='$role'";
 			$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 			if (mysqli_num_rows($result) == 0) {
+				$row = mysqli_fetch_assoc($result)
+				$role=$row['id'];
 				$sql="insert into inscription (login,gn,pnj,paiement) values ('$role','$gn','0','0')";
 				mysqli_query($db,$sql)  or die(mysqli_error($db));
 			}

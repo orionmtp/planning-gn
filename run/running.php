@@ -63,9 +63,11 @@
                 echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\n";
 				$delta1=date_format($delta,"H:i");
 				echo '<form method="POST" action="running.php?serial='.$serial.'"><input type="time" name="delta" value="'.$delta1.'">';
+				echo '<input type="checkbox" name="avance"';
+                if ($avance==1) echo "checked";
+				echo ">";
 				echo '<input type="submit" value="changer" name="change-delta"></form>';
-				if ($avance==1) echo "checked";
-				else echo " de retard";
+
 				echo "<br>\n<br>\n";
                 $test=date_format($delta,"H:i");
                 $differ=date_diff($delta,$zeroed);

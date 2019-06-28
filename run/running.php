@@ -26,6 +26,12 @@
 		else  $sql = " update objectif set succes='1' where id='$obj'";
 		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 	}
+	if (isset($_POST['change-delta']))
+	{
+		$avance=$_POST['avance'];
+		$valeur=mysqli_real_escape_string['temps'];
+		$sql="update gn set avance='$avance', delta='$valeur' where id='$gn'";
+	}
 	$zeroed=date_create(date("Y-m-d 00:00:00",strtotime("now")));
     $now=date_create(date("Y-m-d H:i",strtotime("now"))); 
     $sql = "select delta,avance from gn where id='$gn'";
@@ -54,8 +60,11 @@
                 
             }
             else {
-                echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\ndelta : ".date_format($delta,"H:i");
-				if ($avance==1) echo " d'avance";
+                echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\n";
+				$delta1=date_format($delta,"H:i");
+				echo '<form method="POST" action="running.php?serial='.$serial.'"><input type="time" name="delta" value="'.$delta1.'">';
+				echo '<input type="submit" value="changer" name="change-delta"></form>';
+				if ($avance==1) echo "checked";
 				else echo " de retard";
 				echo "<br>\n<br>\n";
                 $test=date_format($delta,"H:i");

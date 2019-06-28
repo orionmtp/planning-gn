@@ -31,6 +31,7 @@
 		$avance=$_POST['avance'];
 		$valeur=mysqli_real_escape_string['temps'];
 		$sql="update gn set avance='$avance', delta='$valeur' where id='$gn'";
+		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));		
 	}
 	$zeroed=date_create(date("Y-m-d 00:00:00",strtotime("now")));
     $now=date_create(date("Y-m-d H:i",strtotime("now"))); 
@@ -63,7 +64,7 @@
                 echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\n";
 				$delta1=date_format($delta,"H:i");
 				echo '<form method="POST" action="running.php?serial='.$serial.'"><input type="time" name="delta" value="'.$delta1.'">';
-				echo '<input type="checkbox" name="avance"';
+				echo 'avance : <input type="checkbox" name="avance"';
                 if ($avance==1) echo "checked";
 				echo ">";
 				echo '<input type="submit" value="changer" name="change-delta"></form>';

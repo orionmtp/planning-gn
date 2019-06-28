@@ -28,7 +28,8 @@
 	}
 	if (isset($_POST['change-delta']))
 	{
-		$avance=$_POST['avance'];
+		if($_POST['avance']=="on") $avance=1;
+		else $avance=0;
 		$valeur=mysqli_real_escape_string['temps'];
 		$sql="update gn set avance='$avance', delta='$valeur' where id='$gn'";
 		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));		

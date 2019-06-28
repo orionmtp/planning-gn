@@ -32,7 +32,8 @@
 		else $avance=0;
 		$valeur=mysqli_real_escape_string['temps'];
 		$sql="update gn set avance='$avance', delta='$valeur' where id='$gn'";
-		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));		
+echo $sql;
+//		$result=mysqli_query($db,$sql)  or die(mysqli_error($db));		
 	}
 	$zeroed=date_create(date("Y-m-d 00:00:00",strtotime("now")));
     $now=date_create(date("Y-m-d H:i",strtotime("now"))); 

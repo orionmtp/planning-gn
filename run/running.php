@@ -89,7 +89,7 @@ $debut1=date_format(date_add($debut,$differ),"Y-m-d H:i");$prepa1=date_format(da
 }
 $sql="update event set debut='$debut1', duree='$fin1', prepa='$prepa1' where id='$id'";
 echo $sql;
-#mysqli_query($db,$sql)  or die(mysqli_error($db));
+mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
 

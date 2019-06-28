@@ -30,7 +30,7 @@
 	{
 		if($_POST['avance']=="on") $avance=1;
 		else $avance=0;
-		$temp=$_POST['temps']
+		$temp=$_POST['temps'];
 		$valeur=mysqli_real_escape_string($temps);
 		$sql="update gn set avance='$avance', delta='$valeur' where id='$gn'";
 echo $sql;

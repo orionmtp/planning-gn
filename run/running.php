@@ -64,7 +64,7 @@
             else {
                 echo "heure : ".date_format($now,"Y-m-d H:i")."<br>\n";
 				$delta1=date_format($delta,"H:i");
-				echo '<form method="POST" action="running.php?serial='.$serial.'"><input type="temps" name="delta" value="'.$delta1.'">';
+				echo '<form method="POST" action="running.php?serial='.$serial.'"><input type="time" name="temps" value="'.$delta1.'">';
 				echo 'avance : <input type="checkbox" name="avance"';
                 if ($avance==1) echo "checked";
 				echo ">";

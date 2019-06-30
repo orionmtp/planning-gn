@@ -30,7 +30,7 @@ if (isset($_POST['update'])){
 	if (isset($_POST['recur'])) $recur=1; else $recur=0;
 	$sql="select debut from gn where id='$gn'";
 	$row = mysqli_fetch_assoc($result);
-	$old=date("Y-m-d\TH:i", strtotime($row["debut"])
+	$old=date("Y-m-d\TH:i", strtotime($row["debut"]));
 	mysqli_query($db,$sql)  or die(mysqli_error($db));
     $nom=mysqli_real_escape_string ($db,$_POST['nom']);
     $debut=mysqli_real_escape_string ($db,$_POST['debut']);
@@ -46,8 +46,7 @@ if (isset($_POST['update'])){
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
     $sql="update event set debut=addtime('$debut',$delta) where gn='$gn'";
-	
-	
+	    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
 //les infos sur le GN

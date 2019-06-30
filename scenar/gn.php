@@ -45,7 +45,7 @@ if (isset($_POST['update'])){
 	$delta=date_sub($old,$debut);
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
-    $sql="update event set debut=addtime('$debut',$delta) where gn='$gn'";
+    $sql="update event set debut=addtime(debut,$delta) where gn='$gn'";
 	    mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 

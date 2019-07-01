@@ -26,6 +26,8 @@ else
 include 'upper.php';
 echo '<center>';
 
+$sql2="avant";
+
 if (isset($_POST['update'])){
 	if (isset($_POST['recur'])) $recur=1; else $recur=0;
 	$sql="select debut from gn where id='$gn'";
@@ -44,9 +46,7 @@ if (isset($_POST['update'])){
     $url=mysqli_real_escape_string ($db,$_POST['url']);
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
-    $sql="update event set debut=addtime(debut,subtime($debut,$old)) where gn='$gn'";
-    echo "toto ".$sql;
-	
+    $sql2="update event set debut=addtime(debut,subtime($debut,$old)) where gn='$gn'";
 //	mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
@@ -56,6 +56,7 @@ $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<form method="POST" action="gn.php?gn='.$gn.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
+	   echo "test : ".$sql2."<br>";
        echo 'GN<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
        echo '<table><tr><td>du</td><td><input type="datetime-local" name="debut" value="'. date("Y-m-d\TH:i", strtotime($row["debut"])) .'"></td><td> au </td><td><input type="datetime-local" name="fin" value="'. date("Y-m-d\TH:i", strtotime($row["fin"])) .'"></td></tr></table><br>';
 		echo 'one shot <input type="checkbox" name="recur"';

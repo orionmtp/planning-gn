@@ -31,6 +31,7 @@ $sql2="avant";
 if (isset($_POST['update'])){
 	if (isset($_POST['recur'])) $recur=1; else $recur=0;
 	$sql="select debut from gn where id='$gn'";
+	mysqli_query($db,$sql)  or die(mysqli_error($db));
 	$row = mysqli_fetch_assoc($result);
 	$old=$row["debut"];
 	mysqli_query($db,$sql)  or die(mysqli_error($db));

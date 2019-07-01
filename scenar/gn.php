@@ -46,6 +46,7 @@ if (isset($_POST['update'])){
     mysqli_query($db,$sql)  or die(mysqli_error($db));
     $sql="update event set debut=addtime(debut,subtime($debut,$old)) where gn='$gn'";
     echo $sql;
+	
 //	mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 

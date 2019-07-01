@@ -30,8 +30,8 @@ $sql2="avant";
 
 if (isset($_POST['update'])){
 	if (isset($_POST['recur'])) $recur=1; else $recur=0;
-	$sql="select debut from gn where id='$gn'";
-	mysqli_query($db,$sql)  or die(mysqli_error($db));
+	$sql2="select debut from gn where id='$gn'";
+	mysqli_query($db,$sql2)  or die(mysqli_error($db));
 	$row = mysqli_fetch_assoc($result);
 	$old=$row["debut"];
 	mysqli_query($db,$sql)  or die(mysqli_error($db));
@@ -47,7 +47,7 @@ if (isset($_POST['update'])){
     $url=mysqli_real_escape_string ($db,$_POST['url']);
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
-    $sql2="update event set debut=addtime(debut,subtime($debut,$old)) where gn='$gn'";
+    $sql2=$sql2." update event set debut=addtime(debut,subtime($debut,$old)) where gn='$gn'";
 //	mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 

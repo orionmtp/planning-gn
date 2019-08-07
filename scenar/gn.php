@@ -26,8 +26,6 @@ else
 include 'upper.php';
 echo '<center>';
 
-$sql2="avant";
-
 if (isset($_POST['update'])){
 	if (isset($_POST['recur'])) $recur=1; else $recur=0;
 	$sql2="select debut from gn where id='$gn'";
@@ -47,12 +45,6 @@ if (isset($_POST['update'])){
     $url=mysqli_real_escape_string ($db,$_POST['url']);
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
-	$debut=date_create($debut);
-	$datedif=date_diff($old,$debut);
-	if ($datedif->format('%R')=="+") $convertion=$datedif->format('%a %H:%i:00');
-	else $convertion=$datedif->format('%R%a %H:%i:00');
-    $sql="update event set debut=addtime(debut,'$convertion') where gn='$gn'";
-	mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
 //les infos sur le GN

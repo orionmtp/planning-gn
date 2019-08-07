@@ -22,8 +22,7 @@ else {
         {
             if (isset($_POST['nom'])) {
                 $nom=mysqli_real_escape_string ($db,$_POST['nom']);
-                $date=date("Y-m-d")." ".date("H:i").":00";
-                $sql="insert into event (nom,debut,prepa,duree,priorite,description,gn) values ('$nom','$date','01:00:00','01:00:00','10','description','$gn')";
+                $sql="insert into event (nom,debut,prepa,duree,priorite,description,gn) values ('$nom','01:00:00','01:00:00','01:00:00','10','description','$gn')";
                 mysqli_query($db,$sql)  or die(mysqli_error($db));
                 $res=mysqli_insert_id($db);
                 $header="location:event.php?gn=".$gn."&event=".$res;

@@ -29,13 +29,30 @@ if($gn==0 || $event==0)
 // Aucun champ n'est vide, on peut enregistrer dans la table
 else     
     {
+			$sql="select delta from login where id='$id'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+	$row = mysqli_fetch_assoc($result);
+	$timeline=$row['delta'];
+	if ($timeline) {
+		$sql="select debut from gn where id='$gn'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+	$row = mysqli_fetch_assoc($result);
+	$starting=$row['debut'];
+	}
 if (isset($_POST['update'])){
     $nom=mysqli_real_escape_string ($db,$_POST['nom']);
-    $debut=mysqli_real_escape_string ($db,$_POST['debut']);
-    $prepa=mysqli_real_escape_string ($db,$_POST['prepa']);
-    $duree=mysqli_real_escape_string ($db,$_POST['duree']);
+    $debut=$_POST['debut'];
+    $prepa=$_POST['prepa'];
+    $duree=$_POST['duree'];
     $prio=$_POST['prio'];
     $descr=mysqli_real_escape_string ($db,$_POST['descr']);
+	if ($timeline) {
+		$debut=date_create($debut);
+		$trucmuche=date_create($starting);
+		$origin=date_create('0000-00-00\T00:00:00');
+		$machin=$debut->diff($trucmuche);
+		$debut=$machin->format("%H:%I:00");
+	}
     $sql="update event set nom='$nom', debut='$debut', duree='$duree', prepa='$prepa',priorite='$prio',description='$descr' where id='$event'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
@@ -51,13 +68,19 @@ if (isset($_POST['delete2'])){
 }
 
 //les infos sur l'event
-$sql = "select * from event where id='$event'";
+
+if($timeline) $sql = "select event.id,event.nom,event.prepa,event.duree,priorite,event.description,addtime(gn.debut,event.debut) as debut from event inner join gn on gn.id=event.gn where event.id='$event'";
+	else $sql = "select * from event where id='$event'";
+
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<form method="POST" action="event.php?gn='.$gn.'&event='.$event.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'event<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
-       echo '<table><tr><td>debute le </td><td><input type=datetime name="debut" step="60" value="'. date("Y-m-d H:i", strtotime($row["debut"])) .'"></td>';
+       echo '<table><tr><td>debute à ';
+	   if($timeline) echo '<input type=datetime-local name="debut" step="60" value="'. date("Y-m-d\TH:i", strtotime($row["debut"]));
+	   else echo 'H+</td><td><input type=time name="debut" step="60" value="'. date("H:i", strtotime($row["debut"]));
+		echo '"></td>'; 
        echo '<td> pour une duree de </td><td><input type=time name="duree" step="60" value="'. date("H:i", strtotime($row["duree"])) .'"></td>';
        echo '<td> et un temps de preparation de </td><td><input type="time" step="60" name="prepa" value="'. date("H:i", strtotime($row["prepa"])) .'"></td></tr></table><br>';
        echo 'priorite : <select name="prio">';

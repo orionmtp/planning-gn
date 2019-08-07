@@ -26,7 +26,18 @@ else {
         }
 // Aucun champ n'est vide, on peut enregistrer dans la table
         else     
-        {
+        {    
+	$sql="select delta from login where id='$id'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+	$row = mysqli_fetch_assoc($result);
+	$timeline=$row['delta'];
+	if ($timeline) {
+		$sql="select debut from gn where id='$gn'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+	$row = mysqli_fetch_assoc($result);
+	$starting=$row['debut'];
+	}
+			
 	  if (isset($_POST['delete']))
 		{
 		$event=$_POST['besoin'];
@@ -38,12 +49,18 @@ else {
 
 
        //la liste des events
-            $sql = "select id,nom,debut,duree,priorite from event where gn='$gn' order by debut asc, priorite desc";
+	   
+	   if ($timeline) $sql = "select event.id,event.nom,addtime(gn.debut,event.debut) as debut1,duree,priorite from event inner join gn on gn.id=event.gn where event.gn='$gn' order by debut1 asc, priorite asc";
+	   else  $sql = "select id,event.nom,debut,duree,priorite from event where gn='$gn' order by debut asc, priorite asc";
             $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
             if (mysqli_num_rows($result) > 0) {
                 echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>duree</td><td>operation</td></tr>';
                 while($row = mysqli_fetch_assoc($result)) {
-                    echo '<tr><td><a href="event.php?event='. $row["id"]  .'&gn='.$gn.'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>'. $row["debut"] .'</td><td>'. $row["duree"] .'</td><td><form method=POST action="event-list.php?gn='.$gn.'"><input type="hidden" value="'.$row['id'].'" name="besoin"><input type="submit" value="supprimer" name="delete"></form></td></tr>';
+                    echo '<tr><td><a href="event.php?event='. $row["id"]  .'&gn='.$gn.'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>';
+					if ($timeline) echo $row['debut1'];
+						else echo 'H+'. $row["debut"];
+					
+					echo '</td><td>'. $row["duree"] .'</td><td><form method=POST action="event-list.php?gn='.$gn.'"><input type="hidden" value="'.$row['id'].'" name="besoin"><input type="submit" value="supprimer" name="delete"></form></td></tr>';
                 }
             }
             echo '</table>';

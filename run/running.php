@@ -28,7 +28,7 @@
 	}
 	if (isset($_POST['change-delta']))
 	{
-		if($_POST['avance']=="on") $avance=1;
+		if(isset($_POST['avance'])) $avance=1;
 		else $avance=0;
 		$temp=$_POST['temps'];
 		$sql="update gn set avance='$avance', delta='$temp' where id='$gn'";
@@ -74,8 +74,8 @@
                 $test=date_format($delta,"H:i");
                 $differ=date_diff($delta,$zeroed);
 
-if ($avance==1) $situation=date_format(date_sub($now,$differ),"Y-m-d H:i");
-else $situation=date_format(date_add($now,$differ),"Y-m-d H:i");
+if ($avance==1) $situation=date_format($now,"Y-m-d H:i");
+else $situation=date_format($now,"Y-m-d H:i");
 if (isset($_POST['changerevent'])){
 $debut=date_create($_POST['debut']);
 $prepa=date_create($_POST['prepa']);
@@ -93,10 +93,11 @@ mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
 
 
-if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1,subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, prepa1";
-else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and event.debut<='$situation' and '$situation'<=addtime(event.debut,event.duree) order by priorite, debut1";
+
+echo "en cours de jeu<br>\n";
+if ($avance==1) $sql="select event.id,subtime(addtime(gn.debut,event.debut),delta) as debut1,subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and subtime(addtime(gn.debut,event.debut),prepa)<='$situation' and '$situation'<=subtime(addtime(addtime(gn.debut,event.debut),event.duree),prepa) order by priorite, debut1";
+else $sql="select event.id,addtime(addtime(gn.debut,event.debut),delta) as debut1, addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and addtime(addtime(gn.debut,event.debut),prepa)<='$situation' and '$situation'<=addtime(addtime(addtime(gn.debut,event.debut),event.duree),prepa) order by priorite, debut1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-                echo "en cours de jeu<br>\n";
                 if (mysqli_num_rows($result) > 0) {
                     echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>fin</td></tr>';
                     while($row = mysqli_fetch_assoc($result)) {
@@ -121,9 +122,11 @@ echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $r
                 }
 				
 				//en cours de prepa
-                echo "<br>en cours de preparation<br>\n";
-if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1, subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and subtime(event.debut,event.prepa)<='$situation' and '$situation'<=event.debut order by prepa1";
-else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(event.debut,event.prepa),delta) as prepa1, addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and subtime(event.debut,event.prepa)<='$situation' and '$situation'<=event.debut order by prepa1";
+				
+				
+echo "<br>en cours de preparation<br>\n";
+if ($avance==1) $sql="select event.id,subtime(addtime(gn.debut,event.debut),delta) as debut1,subtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and subtime(subtime(addtime(gn.debut,event.debut),event.prepa),prepa)<='$situation' and '$situation'<=subtime(addtime(gn.debut,event.debut),prepa) order by prepa1";
+else $sql="select event.id,addtime(addtime(gn.debut,event.debut),delta) as debut1,addtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and addtime(subtime(addtime(gn.debut,event.debut),event.prepa),prepa)<='$situation' and '$situation'<=addtime(addtime(gn.debut,event.debut),prepa) order by prepa1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result) > 0) {
                     echo '<table><tr><td>nom</td><td>priorite</td><td>prepa</td><td>debut</td><td>operation</td></tr>';
@@ -150,9 +153,11 @@ else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(
                 echo "</table><br>\n";
 				
 				//a venir
-                echo "a venir<br>\n";
-if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1, subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where  gn='$gn' and '$situation'<subtime(event.debut,event.prepa) order by prepa1";
-else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(event.debut,event.prepa),delta) as prepa1, addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where  gn='$gn' and '$situation'<subtime(event.debut,event.prepa) order by prepa1";
+				
+				
+echo "a venir<br>\n";
+if ($avance==1) $sql="select event.id,subtime(addtime(gn.debut,event.debut),delta) as debut1,subtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where  gn='$gn' and '$situation'<subtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) order by prepa1";
+else $sql="select event.id,addtime(addtime(gn.debut,event.debut),delta) as debut1,addtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where  gn='$gn' and '$situation'<addtime(subtime(addtime(gn.debut,event.debut),event.prepa),prepa) order by prepa1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result) > 0) {
                     echo '<table><tr><td>nom</td><td>priorite</td><td>preparation</td><td>heure fin</td></tr>';
@@ -176,10 +181,12 @@ echo '<tr><td><a  target="_blank" href="event.php?event='. $row["id"]  .'">'. $r
                 }
 }
                 echo "</table><br>\n";
-if ($avance==1) $sql="select event.id,subtime(event.debut,delta) as debut1,subtime(subtime(event.debut,event.prepa),delta) as prepa1, subtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where gn='$gn' and '$situation'>addtime(event.debut,event.duree) order by prepa1";
-else $sql="select event.id,addtime(event.debut,delta) as debut1,addtime(subtime(event.debut,event.prepa),delta) as prepa1, addtime(addtime(event.debut,event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where gn='$gn' and '$situation'>addtime(event.debut,event.duree) order by prepa1";
+
+
+echo "termines<br>\n";
+if ($avance==1) $sql="select event.id,subtime(addtime(gn.debut,event.debut),delta) as debut1,subtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where gn='$gn' and '$situation'>subtime(addtime(addtime(gn.debut,event.debut),event.duree),prepa) order by debut1";
+else $sql="select event.id,addtime(addtime(gn.debut,event.debut),delta) as debut1,addtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn where gn='$gn' and '$situation'>addtime(addtime(addtime(gn.debut,event.debut),event.duree),prepa) order by debut1";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
-                echo "termines<br>\n";
                 if (mysqli_num_rows($result) > 0) {
                     echo '<table><tr><td>nom</td><td>heure fin</td></tr>';
                     while($row = mysqli_fetch_assoc($result)) {
@@ -203,7 +210,9 @@ $deb_event=date_create($row['debut1']);
                 }
 }
                 echo "</table><br>\n";
-		echo "OBJECTIFS<br>";
+				
+				
+echo "OBJECTIFS<br>";
 $sql = " select id,nom,role,succes from objectif where objectif.gn='$gn'";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 echo '<table><tr><td>titre</td><td>personnage</td><td>reussite</td><td>operation</td></tr>';
@@ -232,7 +241,9 @@ else echo '<td>'.$nom1.'</td>';
    }
 }
 echo "</table>";
-           echo "<br>evenements suspendus<br>";
+
+
+echo "<br>evenements suspendus<br>";
                 $sql="select distinct event.id,event.nom from event inner join pre_requis on event.id=pre_requis.event inner join objectif on pre_requis.objectif=objectif.id where event.gn='$gn' and pre_requis.cond!=objectif.succes order by event.nom";
                 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
                 if (mysqli_num_rows($result) > 0) {

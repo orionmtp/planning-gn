@@ -8,31 +8,22 @@ else {
     include 'config.php';
     $id=$_SESSION['id'];
     if (isset($_POST['update'])){
-        $login=mysqli_real_escape_string ($db,$_POST['login']);
+		$login=mysqli_real_escape_string ($db,$_POST['login']);
         $pseudo=mysqli_real_escape_string ($db,$_POST['pseudo']);
-        $nom=mysqli_real_escape_string ($db,$_POST['nom']);
-        $prenom=mysqli_real_escape_string ($db,$_POST['prenom']);
-        $tel=mysqli_real_escape_string ($db,$_POST['tel']);
-        $adr=mysqli_real_escape_string ($db,$_POST['adr']);
-        $alim=mysqli_real_escape_string ($db,$_POST['alim']);
-        $sante=mysqli_real_escape_string ($db,$_POST['sante']);
-        $cont1_nom=mysqli_real_escape_string ($db,$_POST['cont1_nom']);
-        $cont1_tel=mysqli_real_escape_string ($db,$_POST['cont1_tel']);
-        $cont2_nom=mysqli_real_escape_string ($db,$_POST['cont2_nom']);
-        $cont2_tel=mysqli_real_escape_string ($db,$_POST['cont2_tel']);
+		if(isset($_POST['delta'])) $delta=TRUE; else $delta=FALSE;
         $password=$_POST['password'];
         if ($password!=""){
             $password=md5($password);
-            $sql="update login set password='$password', contact2_tel='$cont2_tel', contact2_nom='cont2_nom', contact1_tel='$cont1_tel', contact1_nom='$cont1_nom', sante='$sante', alim='$alim', adresse='$adresse', tel='$tel', prenom='$prenom', nom='$nom', pseudo='$pseudo', login='$login' where id='$id'";
+            $sql="update login set password='$password', pseudo='$pseudo', email='$login', delta='$delta' where id='$id'";
         }
         else {
-            $sql="update login set contact2_tel='$cont2_tel', contact2_nom='cont2_nom', contact1_tel='$cont1_tel', contact1_nom='$cont1_nom', sante='$sante', alim='$alim', adresse='$adresse', tel='$tel', prenom='$prenom', nom='$nom', pseudo='$pseudo', login='$login' where id='$id'";
+            $sql="update login set pseudo='$pseudo', login='$login' where id='$id'";
         }
         mysqli_query($db,$sql)  or die(mysqli_error($db));     
     }
     $page=3;
 include 'upper.php';
-    $sql="select * from login where id='$id'";
+    $sql="select email, pseudo, delta from login where id='$id'";
     $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
     echo "<html>\n<head>\n</head>\n<body>\n<center>\ninformations sur le compte\n<br>\n<br>\n";
     if (mysqli_num_rows($result) == 1) {
@@ -49,8 +40,14 @@ include 'upper.php';
             echo '</tr>'."\n";
             echo '<tr>'."\n";
             echo '<td>pseudo</td>'."\n";
-            echo '<td><input type="text" name="pseudo" value="'.$row['pseudo'].'"></td></td>'."\n";
+            echo '<td><input type="text" name="pseudo" value="'.$row['pseudo'].'"></td>'."\n";
             echo '</tr>'."\n";
+			echo '<tr>'."\n";
+			echo '<td>timeline</td>'."\n";
+			echo '<td><input type="checkbox" name="delta" ';
+			if ($row['delta']) echo 'checked';
+			echo '></td>'."\n";
+			echo '</tr>'."\n";
             echo '</table>'."\n";
             echo '<input type = "submit" value = "mettre a jour" name="update">'."\n";
             echo "</form>\n";

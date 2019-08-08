@@ -46,6 +46,10 @@ if (isset($_POST['update'])){
     $sql="update gn set nom='$nom', debut='$debut', fin='$fin',website='$url',presentation='$prez',nb_pj='$pj',nb_pnj='$pnj',paf_pnj='$pafpnj',paf_pj='$pafpj',description='$descr', recur='$recur' where id='$gn'";
     mysqli_query($db,$sql)  or die(mysqli_error($db));
 }
+    $sql="select delta from login where id='$id'";
+    $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
+	$row = mysqli_fetch_assoc($result);
+	$timeline=$row['delta'];
 
 //les infos sur le GN
 $sql = "select nom,debut, fin, nb_pnj,nb_pj,paf_pnj,paf_pj,description,presentation,website,recur from gn where id='$gn'";
@@ -54,7 +58,8 @@ echo '<form method="POST" action="gn.php?gn='.$gn.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'GN<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
-       echo '<table><tr><td>du</td><td><input type="datetime-local" name="debut" value="'. date("Y-m-d\TH:i", strtotime($row["debut"])) .'"></td><td> au </td><td><input type="datetime-local" name="fin" value="'. date("Y-m-d\TH:i", strtotime($row["fin"])) .'"></td></tr></table><br>';
+	   	$starting=$row['debut'];
+       echo '<table><tr><td>du</td><td><input type="datetime-local" name="debut" value="'. date("Y-m-d\TH:i", $starting) .'"></td><td> au </td><td><input type="datetime-local" name="fin" value="'. date("Y-m-d\TH:i", strtotime($row["fin"])) .'"></td></tr></table><br>';
 		echo 'one shot <input type="checkbox" name="recur"';
 		$recur=$row['recur'];
 	   if ($recur!=0)
@@ -91,12 +96,16 @@ if (mysqli_num_rows($result) > 0) {
 echo '<br><br>evenements prevus<br>';
 
 //la liste des events
-$sql = "select id,nom,debut,duree,description,priorite from event where gn='$gn' order by debut asc, priorite asc limit 10";
+if ($timeline) $sql = "select event.id,event.nom,addtime(gn.debut,event.debut) as debut,event.duree,event.description,priorite from event iner join gn on gn.id=event.gn where gn='$gn' order by debut asc, priorite asc limit 10";
+else $sql = "select id,nom,debut,duree,description,priorite from event where gn='$gn' order by debut asc, priorite asc limit 10";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>duree</td><td>description</td></tr>';
    while($row = mysqli_fetch_assoc($result)) {
-echo '<tr><td><a href="event.php?event='. $row["id"]  .'&gn='.$gn.'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>'. $row["debut"] .'</td><td>'. $row["duree"] .'</td><td>'. $row["description"] . '</td></tr>';
+echo '<tr><td><a href="event.php?event='. $row["id"]  .'&gn='.$gn.'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td>';
+if ($timeline) echo '<td>'. $row["debut"] .'</td>';
+else echo '<td>H+'. $row["debut"] .'</td>';
+echo '<td>'. $row["duree"] .'</td><td>'. $row["description"] . '</td></tr>';
    }
    echo '</table>';
    echo '<a href="event-list.php?gn='.$gn.'">liste complete</a><br>';

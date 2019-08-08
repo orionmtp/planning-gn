@@ -2,14 +2,5 @@
 revoir la gestion des PNJ reccurents
  
 
-- run :
-rajouter la fonction de reduction du delta
+- revoir le reset d'un GN
 
-- revoir le reset
-
-
-
-1/ gerer le preupload pour rajouter la securité
-2/ gerer l'upload pour rajouter la securité
-3/ gerer l'upload pour la gestion du document xml et l'injection dans la base de données
-4/ creer un programme local pour génerer le xml facilement sous windows ?

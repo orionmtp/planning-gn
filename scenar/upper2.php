@@ -34,10 +34,10 @@ echo "<br>\n";
 echo "menu pourri a rendre beau<br>\n";
 echo "<table>\n";
 echo "<tr>";
-if ($page!=1) echo "<td><a href=index.php>accueil</a></td>\n";
-if ($page!=2) echo "<td><a href=tarifs.php>tarifs</a></td>\n";
-if ($page!=3) echo "<td><a href=agenda.php>agenda</a></td>\n";
-if ($page!=5) echo "<td><a href=aide.php>aide</a></td>\n";
+echo "<td><a href=index.php>accueil</a></td>\n";
+echo "<td><a href=tarifs.php>tarifs</a></td>\n";
+echo "<td><a href=agenda.php>agenda</a></td>\n";
+echo "<td><a href=aide.php>aide</a></td>\n";
 echo "</tr>\n";
 echo "</table>\n</center>\n<br>\n";
 ?>

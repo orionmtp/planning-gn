@@ -30,7 +30,6 @@ echo "</header>\n";
 echo "<body>\n";
 echo "image de fond a definir<br>\n";
 echo "<center>planningGN<br>\n";
-echo "titre de la page suivant la variable qui va bien<br>\n";
 switch ($page) {
         case 1 : echo "mes GNs<br>\n"; break;
         case 2 : echo "les GNs du site<br>\n";break;
@@ -62,23 +61,23 @@ echo "<br>\n<br>\n";
 echo "menu pourri a rendre beau<br>\n";
 echo "<table>\n";
 echo "<tr>\n"; 
-if ($page!=1) echo "<td><a href=liste.php>mes GNs</a></td>\n";
-if ($page!=2) echo "<td><a href=gns.php>GNs sur le site</a></td>\n";
-if ($page!=3) echo "<td><a href=compte.php>mon compte</a></td>\n";
+echo "<td><a href=liste.php>mes GNs</a></td>\n";
+echo "<td><a href=gns.php>GNs sur le site</a></td>\n";
+echo "<td><a href=compte.php>mon compte</a></td>\n";
 echo '<td><a href="logout.php">se deconnecter</a></td>'."\n";
 echo "</tr>\n</table>\n<br>\n";
-if ($page>=11) {
-    echo "<table>\n<tr>\n";
-    if ($page!=11 and $page!=30) echo "<td><a href=\"gn.php?gn=$gn\">general</a></td>\n";
-    if ($page!=28 and $page!=30) echo "<td><a href=\"scenario.php?gn=$gn\">scenario</a></td>\n";
-    if ($page!=12 and $page!=30) echo "<td><a href=\"event-list.php?gn=$gn\">evenements</a></td>\n";
-    if ($page!=14 and $page!=30) echo "<td><a href=\"scenar-list.php?gn=$gn\">liste des scenaristes</a></td>\n";
-    if ($page!=26 and $page!=30) echo "<td><a href=\"joueur-list.php?gn=$gn\">liste des joueurs</a></td>\n";
-    if ($page!=16 and $page!=30) echo "<td><a href=\"role-list.php?gn=$gn&pnj=0\">roles des PJ</a></td>\n";
-    if ($page!=18 and $page!=30) echo "<td><a href=\"role-list.php?gn=$gn&pnj=1\">roles des PNJ</a></td>\n";
-    if ($page!=31 and $page!=30) echo "<td><a href=\"objectif-list.php?gn=$gn\">objectifs</a></td>\n";
-    if ($page!=29 and $page!=30) echo "<td><a href=\"runtime.php?gn=$gn\">lancer le GN</a></td>\n";
-    echo "</tr>\n</table>\n";
+
+echo "<table>\n<tr>\n";
+echo "<td><a href=\"gn.php?gn=$gn\">general</a></td>\n";
+echo "<td><a href=\"scenario.php?gn=$gn\">scenario</a></td>\n";
+echo "<td><a href=\"event-list.php?gn=$gn\">evenements</a></td>\n";
+echo "<td><a href=\"scenar-list.php?gn=$gn\">liste des scenaristes</a></td>\n";
+echo "<td><a href=\"joueur-list.php?gn=$gn\">liste des joueurs</a></td>\n";
+echo "<td><a href=\"role-list.php?gn=$gn&pnj=0\">roles des PJ</a></td>\n";
+echo "<td><a href=\"role-list.php?gn=$gn&pnj=1\">roles des PNJ</a></td>\n";
+echo "<td><a href=\"objectif-list.php?gn=$gn\">objectifs</a></td>\n";
+echo "<td><a href=\"runtime.php?gn=$gn\">lancer le GN</a></td>\n";
+echo "</tr>\n</table>\n";
 }
 echo "</center>\n<br>\n";
 ?>

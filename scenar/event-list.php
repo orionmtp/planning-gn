@@ -57,7 +57,7 @@ else {
                 echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>duree</td><td>operation</td></tr>';
                 while($row = mysqli_fetch_assoc($result)) {
                     echo '<tr><td><a href="event.php?event='. $row["id"]  .'&gn='.$gn.'">'. $row["nom"] .'</a></td><td>'. $row["priorite"] .'</td><td>';
-					if ($timeline) echo $row['debut1'];
+					if ($timeline) echo $row['debut'];
 						else echo 'H+'. $row["debut"];
 					
 					echo '</td><td>'. $row["duree"] .'</td><td><form method=POST action="event-list.php?gn='.$gn.'"><input type="hidden" value="'.$row['id'].'" name="besoin"><input type="submit" value="supprimer" name="delete"></form></td></tr>';

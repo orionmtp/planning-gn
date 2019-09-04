@@ -1,30 +1,34 @@
 <?php
 echo "<html>\n<header>\n";
 switch ($page) {
-        case 1 : echo "<title>mes GNs</title>\n"; break;
-        case 2 : echo "<title>les GNs du site</title>\n";break;
-        case 3 : echo "<title>mon compte</title>\n";break;
-        case 11 : echo "<title>GN</title>\n";break;
-        case 12 : echo "<title>evenements</title>\n";break;
-        case 13 : echo "<title>evenement</title>\n";break;
-        case 14 : echo "<title>scenaristes</title>\n";break;
-        case 15 : echo "<title>scenariste</title>\n";break;
-        case 16 : echo "<title>PJs</title>\n";break;
-        case 17 : echo "<title>PJ</title>\n";break;
-        case 18 : echo "<title>PNJs</title>\n";break;
-        case 19 : echo "<title>PNJ</title>\n";break;
-        case 20 : echo "<title>role PJ</title>\n";break;
-        case 21 : echo "<title>role PNJ</title>\n";break;
-        case 22 : echo "<title>besoins PJ</title>\n";break;
-        case 23 : echo "<title>besoin PJ</title>\n";break;
-        case 24 : echo "<title>besoins PNJ</title>\n";break;
-        case 25 : echo "<title>besoin PNJ</title>\n";break;
-        case 26 : echo "<title>joueurs</title>\n";break;
-        case 27 : echo "<title>joueur</title>\n";break;
-        case 28 : echo "<title>scenario</title>\n";break;
-        case 29 : echo "<title>runtime</title>";break;
-	case 30 : echo "<title>running</title><meta http-equiv=refresh content=60>";break;
-	case 31 : echo "<title>objectifs</title>";break;
+        case 1 : echo "<title>planning-GN : mes GNs</title>\n"; break;
+        case 2 : echo "<title>planning-GN : les GNs du site</title>\n";break;
+        case 3 : echo "<title>planning-GN : mon compte</title>\n";break;
+        case 11 : echo "<title>planning-GN : GN</title>\n";break;
+        case 12 : echo "<title>planning-GN : evenements</title>\n";break;
+        case 13 : echo "<title>planning-GN : evenement</title>\n";break;
+        case 14 : echo "<title>planning-GN : scenaristes</title>\n";break;
+        case 15 : echo "<title>planning-GN : scenariste</title>\n";break;
+        case 16 : echo "<title>planning-GN : PJs</title>\n";break;
+        case 17 : echo "<title>planning-GN : PJ</title>\n";break;
+        case 18 : echo "<title>planning-GN : PNJs</title>\n";break;
+        case 19 : echo "<title>planning-GN : PNJ</title>\n";break;
+        case 20 : echo "<title>planning-GN : role PJ</title>\n";break;
+        case 21 : echo "<title>planning-GN : role PNJ</title>\n";break;
+        case 22 : echo "<title>planning-GN : besoins PJ</title>\n";break;
+        case 23 : echo "<title>planning-GN : besoin PJ</title>\n";break;
+        case 24 : echo "<title>planning-GN : besoins PNJ</title>\n";break;
+        case 25 : echo "<title>planning-GN : besoin PNJ</title>\n";break;
+        case 26 : echo "<title>planning-GN : joueurs</title>\n";break;
+        case 27 : echo "<title>planning-GN : joueur</title>\n";break;
+        case 28 : echo "<title>planning-GN : scenario</title>\n";break;
+        case 29 : echo "<title>planning-GN : runtime</title>";break;
+	case 30 : echo "<title>planning-GN : running</title><meta http-equiv=refresh content=60>";break;
+	case 31 : echo "<title>planning-GN : objectifs</title>";break;
+		case 32 : echo "<title>planning-GN : crafts</title>";break;
+			case 33 : echo "<title>planning-GN : craft</title>";break;
+					case 34 : echo "<title>planning-GN : TODOs</title>";break;
+			case 35 : echo "<title>planning-GN : TODO</title>";break;
 }
 echo "</header>\n";
 echo "<body>\n";
@@ -55,7 +59,11 @@ switch ($page) {
         case 29 : echo "runtime\n";break;
         case 29 : echo "running\n";break;
 	case 30 : echo "silence, ca tourne !\n";break;
-	case 31 : echo "les des objectifs\n";break;
+	case 31 : echo "les objectifs\n";break;
+			case 32 : echo "liste des crafts";break;
+			case 33 : echo "information sur un craft";break;
+					case 34 : echo "liste des TODOs";break;
+			case 35 : echo "informations sur un TODO";break;
 }
 echo "<br>\n<br>\n";
 echo "menu pourri a rendre beau<br>\n";
@@ -66,7 +74,7 @@ echo "<td><a href=gns.php>GNs sur le site</a></td>\n";
 echo "<td><a href=compte.php>mon compte</a></td>\n";
 echo '<td><a href="logout.php">se deconnecter</a></td>'."\n";
 echo "</tr>\n</table>\n<br>\n";
-
+if ($page>=10) {
 echo "<table>\n<tr>\n";
 echo "<td><a href=\"gn.php?gn=$gn\">general</a></td>\n";
 echo "<td><a href=\"scenario.php?gn=$gn\">scenario</a></td>\n";
@@ -76,6 +84,8 @@ echo "<td><a href=\"joueur-list.php?gn=$gn\">liste des joueurs</a></td>\n";
 echo "<td><a href=\"role-list.php?gn=$gn&pnj=0\">roles des PJ</a></td>\n";
 echo "<td><a href=\"role-list.php?gn=$gn&pnj=1\">roles des PNJ</a></td>\n";
 echo "<td><a href=\"objectif-list.php?gn=$gn\">objectifs</a></td>\n";
+echo "<td><a href=\"craft-list.php?gn=$gn\">crafts</a></td>\n";
+echo "<td><a href=\"todo-list.php?gn=$gn\">TODOs</a></td>\n";
 echo "<td><a href=\"runtime.php?gn=$gn\">lancer le GN</a></td>\n";
 echo "</tr>\n</table>\n";
 }

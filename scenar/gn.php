@@ -58,7 +58,7 @@ echo '<form method="POST" action="gn.php?gn='.$gn.'">';
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
        echo 'GN<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
-	   	$starting=$row['debut'];
+	   	$starting=strtotime($row['debut']);
        echo '<table><tr><td>du</td><td><input type="datetime-local" name="debut" value="'. date("Y-m-d\TH:i", $starting) .'"></td><td> au </td><td><input type="datetime-local" name="fin" value="'. date("Y-m-d\TH:i", strtotime($row["fin"])) .'"></td></tr></table><br>';
 		echo 'one shot <input type="checkbox" name="recur"';
 		$recur=$row['recur'];

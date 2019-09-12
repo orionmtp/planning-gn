@@ -41,7 +41,9 @@ else
 	}
 if (isset($_POST['update'])){
     $nom=mysqli_real_escape_string ($db,$_POST['nom']);
-    $debut=$_POST['debut'];
+    $debut1=$_POST['debut1'];
+	$debut2=$_POST['debut2'];
+	$debut=$debut1.":".$debut2;
     $prepa=$_POST['prepa'];
     $duree=$_POST['duree'];
     $prio=$_POST['prio'];
@@ -79,7 +81,7 @@ if (mysqli_num_rows($result) > 0) {
        echo 'event<br><input type="text" name="nom" value="'. $row["nom"] .'"><br>';
        echo '<table><tr><td>debute à ';
 	   if($timeline) echo '<input type=datetime-local name="debut" step="60" value="'. date("Y-m-d\TH:i", strtotime($row["debut"]));
-	   else echo 'H+</td><td><input type=time name="debut" step="60" value="'. date("H:i", strtotime($row["debut"]));
+	   else echo 'H+</td><td><input type=number name="debut1" min=0 max=168 value="'. date("H", strtotime($row["debut"])).'">:<input type=number name="debut2" min=0 max=59 value="'. date("i", strtotime($row["debut"]));
 		echo '"></td>'; 
        echo '<td> pour une duree de </td><td><input type=time name="duree" step="60" value="'. date("H:i", strtotime($row["duree"])) .'"></td>';
        echo '<td> et un temps de preparation de </td><td><input type="time" step="60" name="prepa" value="'. date("H:i", strtotime($row["prepa"])) .'"></td></tr></table><br>';

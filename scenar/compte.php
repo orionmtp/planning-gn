@@ -10,7 +10,7 @@ else {
     if (isset($_POST['update'])){
 		$login=mysqli_real_escape_string ($db,$_POST['login']);
         $pseudo=mysqli_real_escape_string ($db,$_POST['pseudo']);
-		if(isset($_POST['delta'])) $delta=TRUE; else $delta=FALSE;
+		if(isset($_POST['delta'])) $delta=1; else $delta=0;
         $password=$_POST['password'];
         if ($password!=""){
             $password=md5($password);

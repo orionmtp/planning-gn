@@ -41,9 +41,14 @@ else
 	}
 if (isset($_POST['update'])){
     $nom=mysqli_real_escape_string ($db,$_POST['nom']);
-    $debut1=$_POST['debut1'];
-	$debut2=$_POST['debut2'];
-	$debut=$debut1.":".$debut2;
+	if (isset($_POST['debut']))
+		$debut=$_POST['debut'];
+		else 
+		{
+			$debut1=$_POST['debut1'];
+			$debut2=$_POST['debut2'];
+			$debut=$debut1.":".$debut2;
+		}
     $prepa=$_POST['prepa'];
     $duree=$_POST['duree'];
     $prio=$_POST['prio'];

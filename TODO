@@ -1,16 +1,16 @@
 add-on :
-- creer regles generiques d'affectation (7h de repos consecutif min, 1h de repos min entre 11h et 15h, 1h de repos min entre 19h et 23h)
+
+en cours
 - creer une gestion des todo personnels et de GN
 - creer une gestion de planning craft (avec email ?)
+- gestion des stocks de materiel (rajouter au menu)
+
+prevus
+- creer regles generiques d'affectation (7h de repos consecutif min, 1h de repos min entre 11h et 15h, 1h de repos min entre 19h et 23h)
 - creer des groupes d'orga
 - creer un envoi de mail automatique (rappels planning/todo)
 - creer un css et l'appliquer à toutes les pages
-
-
-
-- moulinette :
-revoir la gestion des PNJ reccurents
- 
-
 - revoir le reset d'un GN
+- moulinette : revoir la gestion des PNJ reccurents
+- impression
 

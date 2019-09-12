@@ -57,7 +57,6 @@ switch ($page) {
         case 27 : echo "information sur un joueur\n";break;
         case 28 : echo "scenario\n";break;
         case 29 : echo "runtime\n";break;
-        case 29 : echo "running\n";break;
 	case 30 : echo "silence, ca tourne !\n";break;
 	case 31 : echo "les objectifs\n";break;
 			case 32 : echo "liste des crafts";break;

@@ -1,0 +1,1 @@
+- gestion des evenements, le delta est au format 24h et ne peut donc pas depasser 23:59

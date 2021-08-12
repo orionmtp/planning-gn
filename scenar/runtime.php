@@ -85,7 +85,7 @@ else {
                 $row = mysqli_fetch_assoc($result);
                 $deb=date_create($row["debut"]);
                 $fin=date_create($row["fin"]);
-                echo "actuelle ". date("H:i",strtotime("now")/*date_format($now,"H:i")."<br>\n"*/;
+                echo "actuelle ". date("T H:i",strtotime("now")/*date_format($now,"H:i")*/."<br>\n";
                 echo "debut ". date_format($deb,"H:i")."<br>\n";
                 echo "fin ".date_format($fin,"H:i")."<br>\n";
                 echo '<form method="POST" action="runtime.php?gn='.$gn.'">'."\n";

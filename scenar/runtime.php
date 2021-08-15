@@ -30,7 +30,7 @@ else {
                 $row = mysqli_fetch_assoc($result);
 				if ($row['recur'])
 				{
-					$sql="update objectif set succes=defvalue where gn='$gn';update role set login='0' where gn='$gn'; delete from planning where gn='$gn'";
+					$sql="update objectif set succes=defvalue where gn='$gn'";
 					mysqli_query($db,$sql)  or die(mysqli_error($db));
 				}
 				else {
@@ -85,7 +85,7 @@ else {
                 $row = mysqli_fetch_assoc($result);
                 $deb=date_create($row["debut"]);
                 $fin=date_create($row["fin"]);
-                echo "actuelle ". date("T H:i",strtotime("now")/*date_format($now,"H:i")*/."<br>\n";
+                echo "actuelle ". date("H:i",strtotime("now"))."<br>\n";
                 echo "debut ". date_format($deb,"H:i")."<br>\n";
                 echo "fin ".date_format($fin,"H:i")."<br>\n";
                 echo '<form method="POST" action="runtime.php?gn='.$gn.'">'."\n";
@@ -93,7 +93,7 @@ else {
                 
             }
             else {
-                echo "heure : ".date("H:i",strtotime("now")/*date_format(strtotime("now"),"T H:i")*/."<br>\ndelta : ".date_format($delta,"H:i")."<br>\n<br>\n";
+                echo "heure : ".date("H:i",strtotime("now"))."<br>\ndelta : ".date_format($delta,"H:i")."<br>\n<br>\n";
 		echo "<a href=\"http://run.planning-gn.fr/running.php?serial=".$serial."\" target=\"new\"><img src=\"create_png.php?text=".$message."\"/></a><br>\n<br>\n";
                 echo '<form method="POST" action="runtime.php?gn='.$gn.'">'."\n";
                 echo '<input type="submit" value="arreter" name="update2"></form>'."\n";

@@ -106,8 +106,6 @@ else */
 			$sql="select event.id,subtime(addtime(gn.debut,event.debut),delta) as debut1,subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and subtime(addtime(gn.debut,event.debut),delta)<='$situation' and subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta)>'$situation' order by priorite, debut1";
 			else 
 			$sql="select event.id,addtime(addtime(gn.debut,event.debut),delta) as debut1, addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite from event inner join gn on gn.id=event.gn where gn='$gn' and addtime(addtime(gn.debut,event.debut),delta)<='$situation' and addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta)>'$situation' order by priorite, debut1";
-echo $sql;
-echo "<br>";
 			$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 			if (mysqli_num_rows($result) > 0) {
 				echo '<table><tr><td>nom</td><td>priorite</td><td>debut</td><td>fin</td></tr>';
@@ -138,8 +136,6 @@ echo "<br>";
 			echo "<br>en cours de preparation<br>\n";
 			if ($avance==1) $sql="select event.id,subtime(addtime(gn.debut,event.debut),delta) as debut1,subtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, subtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and subtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta)<='$situation' and subtime(addtime(gn.debut,event.debut),delta)>'$situation' order by prepa1";
 			else $sql="select event.id,addtime(addtime(gn.debut,event.debut),delta) as debut1,addtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta) as prepa1, addtime(addtime(addtime(gn.debut,event.debut),event.duree),delta) as fin,event.nom,priorite  from event inner join gn on gn.id=event.gn  where gn='$gn' and addtime(subtime(addtime(gn.debut,event.debut),event.prepa),delta)<='$situation' and addtime(addtime(gn.debut,event.debut),delta)>'$situation' order by prepa1";
-echo $sql;
-echo "<br>";
 			$result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 			if (mysqli_num_rows($result) > 0) {
 				echo '<table><tr><td>nom</td><td>priorite</td><td>prepa</td><td>debut</td></tr>';

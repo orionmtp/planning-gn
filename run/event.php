@@ -43,11 +43,11 @@ echo "<center>\n";
 $message="http://run.planning-gn.fr/event.php?event=".$event;
 echo '<img src="create_png.php?text='.$message.'"/><br>';
 echo '<br><br>personnages lies</center><br>';
-$sql = " select role.id,role.nom from besoin inner join role on role.id=besoin.role where besoin.event='$event'";
+$sql = " select besoin.id,role.nom from besoin inner join role on role.id=besoin.role where besoin.event='$event'";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {
    while($row = mysqli_fetch_assoc($result)) {
-      echo '<a href="role.php?role='. $row["id"].'">'. $row["nom"] .'</a><br>';
+      echo '<a href="role.php?besoin='. $row["id"].'">'. $row["nom"] .'</a><br>';
    }
 }
 
@@ -61,8 +61,12 @@ if (mysqli_num_rows($result) > 0) {
             $cible=$row['role'];
             $sql="select nom from role where id='$cible'";
             $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
-            $row2 = mysqli_fetch_assoc($result2);
-            echo '<td><a href="role.php?role='.$cible.'">'.$row2['nom'].'</a></td>';
+			if (mysqli_num_rows($result2) > 0)			{
+				$row2 = mysqli_fetch_assoc($result2);
+				echo '<td><a href="role.php?role='.$cible.'">'.$row2['nom'].'</a></td>';
+			}
+			else
+				echo "<td></td>";
             if ($row['cond']==0) echo '<td>echec</td>';
             else echo '<td>reussite</td>';
             if ($row['succes']==0) echo '<td>echec</td>';

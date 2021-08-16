@@ -35,8 +35,7 @@
                         $row4 = mysqli_fetch_assoc($result2);
                         echo '<a href=role.php?role='.$row4["id"].'>'.$row4["nom"].'</a><br>';
                 }
-
-		echo 'le joueur doit il connaitre sa cible ? <input type="checkbox" name="objectif"';
+				echo 'le joueur doit il connaitre sa cible ? <input type="checkbox" name="objectif"';
                 if ($row['obj_secret']==1) echo " checked";
                 echo '><br>';
                 echo 'la cible est elle dans l\'ignorance de cet objectif ? <input type="checkbox" name="cible"';

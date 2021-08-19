@@ -29,6 +29,8 @@ switch ($page) {
 			case 33 : echo "<title>planning-GN : craft</title>";break;
 					case 34 : echo "<title>planning-GN : TODOs</title>";break;
 			case 35 : echo "<title>planning-GN : TODO</title>";break;
+			case 36 : echo "<title>planning-GN : lieux</title>";break;
+						case 37 : echo "<title>planning-GN : lieu</title>";break;
 }
 echo "</header>\n";
 echo "<body>\n";
@@ -63,6 +65,8 @@ switch ($page) {
 			case 33 : echo "information sur un craft";break;
 					case 34 : echo "liste des TODOs";break;
 			case 35 : echo "informations sur un TODO";break;
+								case 36 : echo "liste des lieux";break;
+			case 37 : echo "informations sur un lieu";break;
 }
 echo "<br>\n<br>\n";
 echo "menu pourri a rendre beau<br>\n";
@@ -83,6 +87,7 @@ echo "<td><a href=\"joueur-list.php?gn=$gn\">liste des joueurs</a></td>\n";
 echo "<td><a href=\"role-list.php?gn=$gn&pnj=0\">roles des PJ</a></td>\n";
 echo "<td><a href=\"role-list.php?gn=$gn&pnj=1\">roles des PNJ</a></td>\n";
 echo "<td><a href=\"objectif-list.php?gn=$gn\">objectifs</a></td>\n";
+echo "<td><a href=\"lieu-list.php?gn=$gn\">lieux</a></td>\n";
 echo "<td><a href=\"craft-list.php?gn=$gn\">crafts</a></td>\n";
 echo "<td><a href=\"todo-list.php?gn=$gn\">TODOs</a></td>\n";
 echo "<td><a href=\"runtime.php?gn=$gn\">lancer le GN</a></td>\n";

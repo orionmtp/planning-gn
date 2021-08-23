@@ -154,6 +154,8 @@ if (mysqli_num_rows($result) > 0) {
 }
 echo '</select>';
 echo '<input type="submit" value="ajouter un role PJ" name="pj"></form>'."\n";
+
+
 echo '<br><br>pre requis<br>';
 $sql="select objectif.id, objectif.nom,objectif.role,pre_requis.cond,objectif.succes from objectif inner join pre_requis on objectif.id=pre_requis.objectif where event='$event'";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
@@ -165,13 +167,19 @@ if (mysqli_num_rows($result) > 0) {
             $sql="select nom from role where id='$cible'";
             $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
             $row2 = mysqli_fetch_assoc($result2);
+if (mysqli_num_rows($result2) > 0) {
             echo '<td><a href="role.php?gn='.$gn.'&role='.$cible.'">'.$row2['nom'].'</a></td>';
+			}
+			else {
+				echo '<td>aucun</td>';
+			}
             if ($row['cond']==0) echo '<td>echec</td>';
             else echo '<td>reussite</td>';
             if ($row['succes']==0) echo '<td>echec</td>';
     else echo '<td>reussite</td>';
     echo '<td><form method="POST" action="event.php?event='. $event  .'&gn='.$gn.'"><input type=hidden name=objectif value='.$row['id'].'><input type=submit value="supprimer" name="delete2"></form></td>';
-    echo '</tr>'."\n";
+				echo '</tr>'."\n";
+
    }
    echo '</table><br>';
 }

@@ -96,7 +96,7 @@ if (mysqli_num_rows($result) > 0) {
 echo '<br><br>evenements prevus<br>';
 
 //la liste des events
-if ($timeline) $sql = "select event.id,event.nom,addtime(gn.debut,event.debut) as debut,event.duree,event.description,priorite from event iner join gn on gn.id=event.gn where gn='$gn' order by debut asc, priorite asc limit 10";
+if ($timeline) $sql = "select event.id,event.nom,addtime(gn.debut,event.debut) as debut,event.duree,event.description,priorite from event inner join gn on gn.id=event.gn where gn='$gn' order by debut asc, priorite asc limit 10";
 else $sql = "select id,nom,debut,duree,description,priorite from event where gn='$gn' order by debut asc, priorite asc limit 10";
 $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
 if (mysqli_num_rows($result) > 0) {

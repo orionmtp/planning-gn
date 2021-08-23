@@ -9,8 +9,6 @@ include 'config.php';
 // On commence par récupérer les champs
 if (isset($_GET['gn'])) $gn=$_GET['gn'];
 else $gn=0;
-if (isset($_GET['role'])) $role=$_GET['role'];
-else $role=0; 
     $id=$_SESSION['id'];
     $sql="select id from admin where gn='$gn' and login='$id'";
     $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
@@ -26,7 +24,7 @@ if($gn==0)
 // Aucun champ n'est vide, on peut enregistrer dans la table
 else     
     {
-        $sql = "insert into objectif (gn,role,nom,relation,succes,description,obj_secret,cible_secret,defvalue) values ('$gn','$role','nom','0','0','description','0','0','0')";
+        $sql = "insert into objectif (gn,role,nom,relation,succes,description,obj_secret,cible_secret,defvalue) values ('$gn','0','nom','0','0','description','0','0','0')";
         mysqli_query($db,$sql)  or die(mysqli_error($db));
         $besoin=mysqli_insert_id($db);
         $head="location:objectif.php?gn=$gn&objectif=$besoin";

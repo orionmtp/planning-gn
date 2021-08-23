@@ -43,14 +43,24 @@ $result2=mysqli_query($db,$sql)  or die(mysqli_error($db));
 $row2 = mysqli_fetch_assoc($result2);
 
       echo '<tr><td><a href="objectif.php?gn='.$gn.'&objectif='. $row["id"]. '">'. $row["nom"] .'</a></td>';
+	  if (mysqli_num_rows($result1) > 0) {
       echo '<td><a href="role.php?gn='.$gn.'&role='. $row["role"]. '">'. $row1["nom"] .'</a></td>';
+	  }
+	  else{
+		  echo '<td>aucun</td>';
+	  }
+	  if (mysqli_num_rows($result2) > 0) {
       echo '<td><a href="role.php?gn='.$gn.'&role='. $row["relation"]. '">'. $row2["nom"] .'</a></td>';
+	  }
+	  else {
+		  echo '<td>aucun</td>';
+	  }
       echo '<td><form method=POST action="objectif-list.php?gn='.$gn.'"><input type="hidden" value="'.$row['id'].'" name="besoin"><input type="submit" value="supprimer" name="delete"></form></td>';
       echo '</tr>';
    }
 }
 echo '</table>';
-        echo '<form method="POST" action="add-objectif.php?gn='.$gn.'&role=0">';
+        echo '<form method="POST" action="add-objectif.php?gn='.$gn.'">';
         echo '<input type="submit" value="ajouter un objectif"></form><br>';
 }
     echo '</center></body></html>';

@@ -50,7 +50,7 @@ else {
 
        //la liste des events
 	   
-	   if ($timeline) $sql = "select event.id,event.nom,addtime(gn.debut,event.debut) as debut1,duree,priorite from event inner join gn on gn.id=event.gn where event.gn='$gn' order by debut1 asc, priorite asc";
+	   if ($timeline) $sql = "select event.id,event.nom,addtime(gn.debut,event.debut) as debut1,duree,priorite, lieu from event inner join gn on gn.id=event.gn where event.gn='$gn' order by debut1 asc, priorite asc";
 	   else  $sql = "select id,event.nom,debut as debut1,duree,priorite from event where gn='$gn' order by debut asc, priorite asc";
             $result=mysqli_query($db,$sql)  or die(mysqli_error($db));
             if (mysqli_num_rows($result) > 0) {

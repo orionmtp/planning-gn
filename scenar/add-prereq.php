@@ -28,7 +28,7 @@ else {
     else     
     {
         if ($objectif==0) {
-            $sql = "insert into objectif (gn,role,nom,relation,succes,description,obj_secret,cible_secret,defvalue) values ('$gn','0','nom','0','0','description','0','0')";
+            $sql = "insert into objectif (gn,role,nom,relation,succes,description,obj_secret,cible_secret,defvalue) values ('$gn','0','nom','0','0','description','0','0','0')";
             mysqli_query($db,$sql)  or die(mysqli_error($db));
             $objectif=mysqli_insert_id($db);
         } 

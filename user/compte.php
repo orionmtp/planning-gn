@@ -8,7 +8,7 @@ else {
     $id=$_SESSION['id'];
     if (isset($_POST['login'])){
         $temp=mysqli_real_escape_string ($db,$_POST['login']);
-        $sql="update login_jeu set login='$temp' where id='$id'";
+        $sql="update login_jeu set email='$temp' where id='$id'";
         mysqli_query($db,$sql)  or die(mysqli_error($db));
     }
     if (isset($_POST['pseudo'])){
